@@ -1,0 +1,46 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "vacation-request-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/vacationRequest/VacationRequestWebPart.js",
+          "manifest": "./src/webparts/vacationRequest/VacationRequestWebPart.manifest.json"
+        }
+      ]
+    },
+    "vacation-list-user-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/vacationListUser/VacationListUserWebPart.js",
+          "manifest": "./src/webparts/vacationListUser/VacationListUserWebPart.manifest.json"
+        }
+      ]
+    },
+    "modification-conge-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/modificationConge/ModificationCongeWebPart.js",
+          "manifest": "./src/webparts/modificationConge/ModificationCongeWebPart.manifest.json"
+        }
+      ]
+    },
+    "vacation-list-manager-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/vacationListManager/VacationListManagerWebPart.js",
+          "manifest": "./src/webparts/vacationListManager/VacationListManagerWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "VacationRequestWebPartStrings": "lib/webparts/vacationRequest/loc/{locale}.js",
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js",
+    "VacationListUserWebPartStrings": "lib/webparts/vacationListUser/loc/{locale}.js",
+    "ModificationCongeWebPartStrings": "lib/webparts/modificationConge/loc/{locale}.js",
+    "VacationListManagerWebPartStrings": "lib/webparts/vacationListManager/loc/{locale}.js"
+  }
+}
