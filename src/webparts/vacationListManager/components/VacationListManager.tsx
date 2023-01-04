@@ -81,7 +81,9 @@ export default class VacationListManager extends React.Component<IVacationListMa
     var result = []
     var data = await Web(this.props.url).lists.getByTitle('vacationRequest').items.getAll();
     for (let i = 0; i < data.length; i++) {
+      
       var user = await this.getUserName(data[i].AuthorId)
+      console.log(user)
       result.push({
         Title: user,
         MotifAbsence: data[i].ctgVacation,
@@ -128,13 +130,134 @@ export default class VacationListManager extends React.Component<IVacationListMa
   // filter items 
   public filterItems = async (dateDebut, dateFin, employee, status) => {
 
-    console.log(dateDebut)
-    console.log(dateFin)
-    console.log(employee)
-    console.log(status)
-    
+    var vacationRequestData = this.state.vacationRequestData 
+    var dataAfterFilter
+
+    if (employee !== "" && status !== "" && dateDebut === null && dateFin === null){         // Filter by Employee and status
+      console.log(1)
+      if (status !== "Tous"){
+        dataAfterFilter = vacationRequestData.filter(item => item.Title === employee && item.RequestType === status)
+      }else {
+        dataAfterFilter = vacationRequestData.filter(item => item.Title === employee)
+
+      }
+
+
+    }else if (employee !== "" && dateDebut !== null && status === "" && dateFin === null){   // filter by Employee and date debut 
+      console.log(2)
+      dataAfterFilter = vacationRequestData.filter(item => item.Title === employee && new Date(item.DA).setHours(0,0,0,0) >= new Date(dateDebut).setHours(0,0,0,0))
+
+    }else if (employee !== "" && dateFin !== null && status === "" && dateDebut === null){   // filter by employee and date fin
+      console.log(3)
+      dataAfterFilter = vacationRequestData.filter(item => item.Title === employee && new Date(item.DE).setHours(0,0,0,0) <= new Date(dateFin).setHours(0,0,0,0))
+      
+
+
+    }else if (employee !== "" && status !== "" && dateDebut !== null && dateFin === null){   // filter by employee, status and date debut 
+      console.log(4)
+      if (status !== "Tous") {
+        dataAfterFilter = vacationRequestData.filter(item => item.Title === employee && new Date(item.DA).setHours(0,0,0,0) >= new Date(dateDebut).setHours(0,0,0,0) && item.RequestType === status)
+
+      }else {
+        dataAfterFilter = vacationRequestData.filter(item => item.Title === employee && new Date(item.DA).setHours(0,0,0,0) >= new Date(dateDebut).setHours(0,0,0,0))
+
+      }
+
+
+    }else if (employee !== "" && status !== "" && dateFin !== null && dateDebut === null){   // filter by employee, status and date fin
+      console.log(5)
+      if (status !== "Tous") {
+        dataAfterFilter = vacationRequestData.filter(item => item.Title === employee && new Date(item.DE).setHours(0,0,0,0) <= new Date(dateFin).setHours(0,0,0,0) && item.RequestType === status)
+
+      }else {
+        dataAfterFilter = vacationRequestData.filter(item => item.Title === employee && new Date(item.DE).setHours(0,0,0,0) <= new Date(dateFin).setHours(0,0,0,0))
+
+      }
+
+
+    }else if (employee !== "" && dateDebut !== null && dateFin !== null && status === ""){   // filter by employee, date debut and datefin
+      console.log(6)
+      dataAfterFilter = vacationRequestData.filter(item => item.Title === employee && new Date(item.DE).setHours(0,0,0,0) <= new Date(dateFin).setHours(0,0,0,0) && new Date(item.DA).setHours(0,0,0,0) >= new Date(dateDebut).setHours(0,0,0,0))
+
+    }else if (dateDebut !== null && dateFin !== null && status === "" && employee === ""){   // filter by date debut et date fin 
+      console.log(7)
+      dataAfterFilter = vacationRequestData.filter(item => new Date(item.DE).setHours(0,0,0,0) <= new Date(dateFin).setHours(0,0,0,0) && new Date(item.DA).setHours(0,0,0,0) >= new Date(dateDebut).setHours(0,0,0,0))
+      
+
+
+    }else if (status !== "" && dateDebut !== null && dateFin === null && employee === ""){   // filter by status et date debut
+      console.log(8)
+      if (status !== "Tous") {
+        dataAfterFilter = vacationRequestData.filter(item => new Date(item.DA).setHours(0,0,0,0) >= new Date(dateDebut).setHours(0,0,0,0) && item.RequestType === status)
+
+      }else {
+        dataAfterFilter = vacationRequestData.filter(item => new Date(item.DA).setHours(0,0,0,0) >= new Date(dateDebut).setHours(0,0,0,0))
+
+      }
+
+
+    }else if (status !== "" && dateFin !== null && dateDebut === null && employee === ""){   // filter by status et date fin
+      console.log(9)
+      if (status !== "Tous") {
+        dataAfterFilter = vacationRequestData.filter(item => new Date(item.DE).setHours(0,0,0,0) <= new Date(dateFin).setHours(0,0,0,0) && item.RequestType === status)
+
+      }else {
+        dataAfterFilter = vacationRequestData.filter(item => new Date(item.DE).setHours(0,0,0,0) <= new Date(dateFin).setHours(0,0,0,0))
+
+      }
+
+
+    }else if (status !== "" && dateDebut !== null && dateFin !== null && employee === ""){   // filter by status, date debut et date fin
+      console.log(10) 
+      if (status !== "Tous") {
+        dataAfterFilter = vacationRequestData.filter(item => item.RequestType === status && new Date(item.DE).setHours(0,0,0,0) <= new Date(dateFin).setHours(0,0,0,0) && new Date(item.DA).setHours(0,0,0,0) >= new Date(dateDebut).setHours(0,0,0,0))
+
+      }else {
+        dataAfterFilter = vacationRequestData.filter(item => new Date(item.DE).setHours(0,0,0,0) <= new Date(dateFin).setHours(0,0,0,0) && new Date(item.DA).setHours(0,0,0,0) >= new Date(dateDebut).setHours(0,0,0,0))
+
+      }
+
+
+    }else if (employee !== "" && status === "" && dateDebut === null && dateFin === null){   // filter by employee
+      console.log(11)
+      dataAfterFilter = vacationRequestData.filter(item => item.Title === employee)
+
+    }else if (status !== "" && employee === "" && dateDebut === null && dateFin === null){   // filter by status 
+      console.log(12)
+      if (status !== "Tous") {
+        dataAfterFilter = vacationRequestData.filter(item => item.RequestType === status)
+
+      }else {
+        dataAfterFilter = vacationRequestData
+
+      }
+
+
+    }else if (dateDebut !== null && employee === "" && dateFin === null && status === ""){   // filter by date debut 
+      console.log(13)
+      dataAfterFilter = vacationRequestData.filter(item =>  new Date(item.DA).setHours(0,0,0,0) >= new Date(dateDebut).setHours(0,0,0,0))
+
+    }else if (dateFin !== null && employee === "" && dateDebut === null && status === ""){  // filter by date fin
+      console.log(14)
+      dataAfterFilter = vacationRequestData.filter(item =>  new Date(item.DE).setHours(0,0,0,0) <= new Date(dateFin).setHours(0,0,0,0))
+
+    }else if (dateFin !== null && employee !== "" && dateDebut !== null && status !== ""){                                                                                     // filter by employee, date debut, date fin et status
+      console.log(15)
+      if (status !== "Tous") {
+        dataAfterFilter = vacationRequestData.filter(item => item.RequestType === status && new Date(item.DE).setHours(0,0,0,0) <= new Date(dateFin).setHours(0,0,0,0) && new Date(item.DA).setHours(0,0,0,0) >= new Date(dateDebut).setHours(0,0,0,0) && item.Title === employee)
+
+      }else {
+        dataAfterFilter = vacationRequestData.filter(item => new Date(item.DE).setHours(0,0,0,0) <= new Date(dateFin).setHours(0,0,0,0) && new Date(item.DA).setHours(0,0,0,0) >= new Date(dateDebut).setHours(0,0,0,0) && item.Title === employee)
+
+      }
+
+    }
+
+    this.setState({vacationRequestDataFilter:dataAfterFilter})
   }
 
+
+  
 
 
 
@@ -178,7 +301,7 @@ export default class VacationListManager extends React.Component<IVacationListMa
                 options={this.state.optionsEmployees}
                 placeholder="Select an option"  
                 // defaultSelectedKey={this.state.status}
-                onChanged={(value) => this.setState({EmployesFilter:value.key})}
+                onChanged={(value) => this.setState({EmployesFilter:value.text})}
               />
 
             <label className={styles.title}>Status :  &nbsp;</label>
