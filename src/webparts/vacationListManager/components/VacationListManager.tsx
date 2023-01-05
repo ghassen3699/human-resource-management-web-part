@@ -359,7 +359,21 @@ export default class VacationListManager extends React.Component<IVacationListMa
                   <td>{vacationRequest.MotifAbsence}</td> 
                   <td>{this.formatDate(vacationRequest.DA)}</td> 
                   <td>{this.formatDate(vacationRequest.DE)}</td> 
-                  <td>{vacationRequest.RequestType}</td> 
+                  {/* If request type is "En cours" */}
+                  {vacationRequest.RequestType === "en cours" && <td>
+                    <div className={styles.cercleBleu}></div> {vacationRequest.RequestType}  
+                  </td>}
+
+                  {/* If request type is "Annuler" */}
+                  {vacationRequest.RequestType === "Annulé" && <td>
+                    <div className={styles.cercleVert}></div> {vacationRequest.RequestType}  
+                  </td>}
+
+                  {/* If request type is "Validé" */}
+                  {vacationRequest.RequestType === "Validé" && <td>
+                    <div className={styles.cercleRouge}></div> {vacationRequest.RequestType}  
+                  </td>}
+
                   <td>
                     <a href="#popup1" onClick={()=> this.OpenPopUp(vacationRequest.Title, vacationRequest.MotifAbsence, vacationRequest.DA, vacationRequest.DE, vacationRequest.numbreOfDays, vacationRequest.soldeOfDays, vacationRequest.RequestType, vacationRequest.RequestType, vacationRequest.Comment)}>
                       <span className={styles.icon}>
