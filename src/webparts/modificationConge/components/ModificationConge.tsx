@@ -221,17 +221,25 @@ export default class ModificationConge extends React.Component<IModificationCong
       // convert the type of date seleted
       const date = Year.toString() + "-" + Month.toString() + "-" + Day.toString()  + " GMT";
       const newDateFormat = new Date(date);
-      this.setState({DateDebut:newDateFormat});
-      
+      this.setState({DateDebut:newDateFormat, DateFin:null, numberOfVacationDays:0});
       this.ChangeDefaultEndDateDisabled(newDateFormat)
 
     // if beginDate param equal to false -> this function setstate the endDate
     }else {
       // convert the type of date
       const date = Year.toString() + "-" + Month.toString() + "-" + Day.toString()  + " GMT";
+      
       const newDateFormat = new Date(date);
-      this.setState({DateFin:newDateFormat});
+      const diffDays = this.SumVacationDays(this.state.DateDebut, newDateFormat)
+      this.setState({DateFin:newDateFormat, numberOfVacationDays:diffDays});
     }
+  }
+
+
+  public SumVacationDays = (dateDebut, DateFin) => {
+    var diffDays = DateFin.getTime() - dateDebut.getTime();
+    diffDays = diffDays / (1000 * 3600 * 24);
+    return diffDays
   }
 
 
@@ -273,9 +281,11 @@ export default class ModificationConge extends React.Component<IModificationCong
     if (items.length > 0) {
       if (items[0].id && items[0].text && items[0].secondaryText){
         let replacedUserData = {ID:items[0].id,name:items[0].text,email:items[0].secondaryText}
+        console.log(replacedUserData)
         this.setState({replacedBy:[replacedUserData]})
       }
     }else {
+      console.log('test')
       this.setState({replacedBy:[]})
     }
   }
@@ -529,14 +539,15 @@ export default class ModificationConge extends React.Component<IModificationCong
 
       // if vacation request with motifAbsence like ("Congé payé", "Demi journée", "Naissance", "Circoncision")
       if (this.state.motifAbsence === "Congé payé" || this.state.motifAbsence === "Demi journée"  || this.state.motifAbsence === "Naissance" || this.state.motifAbsence === "Circoncision" ){
+        console.log(this.state.replacedBy[0].ID)
         formData = {
           'Comment': this.state.comment,
           'EndDate': this.state.DateFin,
           'DetailMotifAbsence': "",
           'NrbDays': this.state.numberOfVacationDays,
           'RemainingDays': "0",
-          'ReplacedById': this.state.replacedBy[0].id,
-          'ReplacedByStringId': this.state.replacedBy[0].id.toString() ,
+          'ReplacedById': this.state.replacedBy[0].ID,
+          'ReplacedByStringId': this.state.replacedBy[0].ID.toString() ,
           'RequestType': "en cours",
           'ctgVacation': this.state.motifAbsence,
           'dateDeDepart': this.state.DateDebut,
@@ -809,11 +820,7 @@ export default class ModificationConge extends React.Component<IModificationCong
 
               </div>
 
-              <div className={stylescustom.data}>
-                <p className={stylescustom.title}></p>
-                {!this.disableEndDate() && <button className={stylescustom.btnCal} onClick={()=> this.vacationDays()}>Calculer la durée</button>}
-                
-              </div>
+              
             </div>
             
 
