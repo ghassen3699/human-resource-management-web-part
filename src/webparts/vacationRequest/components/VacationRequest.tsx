@@ -235,17 +235,25 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
       // convert the type of date seleted
       const date = Year.toString() + "-" + Month.toString() + "-" + Day.toString()  + " GMT";
       const newDateFormat = new Date(date);
-      this.setState({DateDebut:newDateFormat});
-      
+      this.setState({DateDebut:newDateFormat, DateFin:null, numberOfVacationDays:0});
       this.ChangeDefaultEndDateDisabled(newDateFormat)
 
     // if beginDate param equal to false -> this function setstate the endDate
     }else {
       // convert the type of date
       const date = Year.toString() + "-" + Month.toString() + "-" + Day.toString()  + " GMT";
+      
       const newDateFormat = new Date(date);
-      this.setState({DateFin:newDateFormat});
+      const diffDays = this.SumVacationDays(this.state.DateDebut, newDateFormat)
+      this.setState({DateFin:newDateFormat, numberOfVacationDays:diffDays});
     }
+  }
+
+
+  public SumVacationDays = (dateDebut, DateFin) => {
+    var diffDays = DateFin.getTime() - dateDebut.getTime();
+    diffDays = diffDays / (1000 * 3600 * 24);
+    return diffDays
   }
 
 
@@ -297,6 +305,9 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     diffDays = diffDays / (1000 * 3600 * 24);
     this.setState({numberOfVacationDays:diffDays})
   }
+
+
+
 
 
 
@@ -700,11 +711,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
               </div>
 
-              <div className={stylescustom.data}>
-                <p className={stylescustom.title}></p>
-                {!this.disableEndDate() && <button className={stylescustom.btnCal} onClick={()=> this.vacationDays()}>Calculer la durée</button>}
-                
-              </div>
+              
             </div>
             
 
