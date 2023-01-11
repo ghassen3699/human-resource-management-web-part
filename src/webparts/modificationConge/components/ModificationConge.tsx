@@ -593,6 +593,14 @@ export default class ModificationConge extends React.Component<IModificationCong
 
   }
 
+
+  // // get the current language of sharepoint ************************
+  // public currentSharepointLanguage = () => {
+  //   console.log(this.props.context.currentCultureName);
+  // }
+  
+
+
   componentDidMount(): void {
     this.GetFormData();
     this.getUsers();
