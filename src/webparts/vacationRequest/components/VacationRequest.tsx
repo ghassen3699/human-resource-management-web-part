@@ -14,6 +14,9 @@ import { Label } from 'office-ui-fabric-react/lib/Label';
 import { sp, Web, IWeb } from "@pnp/sp/presets/all";
 import "@pnp/sp/lists";
 import "@pnp/sp/items";
+import "@pnp/sp/webs";
+import "@pnp/sp/lists/web";
+import "@pnp/sp/attachments";
 import { getTheme } from "@uifabric/styling";
 // var img = require('../../../image/UCT_image.png');
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
@@ -27,10 +30,12 @@ import {
   loadTheme
 } from "office-ui-fabric-react";
 import { MSGraphClient, SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
+import Holidays from 'date-holidays'
 export interface IUser {
   displayName: string;
   mail:string;
 }
+
 //import { IUserPresenceState } from './IVacationRequestProps';
 
 
@@ -439,7 +444,8 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     // send attachement file in the new item if user add a new file
     if (this.state.fileName !== ''){
       const item = Web(this.props.url).lists.getByTitle('vacationRequest').items.getById(sendData.data.ID);
-      await item.attachmentFiles.add(this.state.fileName,this.state.fileName);
+      const result = await item.attachmentFiles.add(this.state.fileName,"add file");
+      console.log(result)
     }
 
     this.setState({alertShowed:true})
@@ -455,6 +461,56 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
       this.setState({numberOfVacationDaysForUser:currentUserVacationDays[0].number_of_vacation})
     }
 
+  }
+
+  // get weekend days 
+  public getWeekendDays = (month, year) => {
+    month--;
+    var date = new Date(year, month, 1);
+    var days = [];
+    while (date.getMonth() === month) {
+      // Exclude weekends
+      var tmpDate = date ;            
+      var weekDay = tmpDate.getDay(); // week day
+      var day = tmpDate.getDate(); // day
+
+      if (weekDay%6 === 0) { // exclude 0=Sunday and 6=Saturday
+          days.push(day);
+      }
+
+      date.setDate(date.getDate() + 1);
+    }
+
+    console.log(days)  ;
+  }
+
+
+  // public getDaysOfWeekBetweenDates = (sDate , eDate) => {
+  //   const startDate = new Date(sDate)
+  //   const endDate = new Date(eDate);
+    
+  //   endDate.setDate(endDate.getDate() + 1);
+    
+  //   const daysOfWeek = [];
+    
+  //   let i = 0;
+    
+  //   while (i < 7 && startDate < endDate) {
+  //     daysOfWeek.push(startDate.getDay());
+  //     startDate.setDate(startDate.getDate() + 1);
+  //     i++;
+  //   }
+  
+  //   console.log(daysOfWeek) ;
+  // };
+  
+
+  // get all hoidays of current year 
+  public getHolidayDays = () => {
+    var hd = new Holidays('TN');
+    var currentYear = new Date();
+    var currentYearHolidays = hd.getHolidays(currentYear.getFullYear());
+    console.log(currentYearHolidays)
   }
 
 
@@ -541,6 +597,10 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     const theme = getTheme();
 
     this.numberOfVacationDays();
+    // this.getHolidayDays();     // bien 
+    // this.getWeekendDays(1,2023);
+
+    // this.getDaysOfWeekBetweenDates("2023-01-11", "2023-01-30")
 
 
     

@@ -28,6 +28,7 @@
     "@pnp/sp": "^2.4.0",
     "@pnp/spfx-controls-react": "^2.5.0",
     "axios": "^0.21.1",
+    "date-holidays": "^3.16.14",
     "import": "0.0.6",
     "infinite-react-carousel": "^1.2.11",
     "office-ui-fabric-react": "6.214.0",
