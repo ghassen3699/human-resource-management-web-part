@@ -240,7 +240,12 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
       // convert the type of date seleted
       const date = Year.toString() + "-" + Month.toString() + "-" + Day.toString()  + " GMT";
       const newDateFormat = new Date(date);
-      this.setState({DateDebut:newDateFormat, DateFin:null, numberOfVacationDays:0});
+      if (this.state.motifAbsence === "Congé payé" || this.state.motifAbsence === "Maladie") {
+        this.setState({DateDebut:newDateFormat, DateFin:null, numberOfVacationDays:0});
+      }else {
+        this.setState({DateDebut:newDateFormat});
+      }
+      
       this.ChangeDefaultEndDateDisabled(newDateFormat)
 
     // if beginDate param equal to false -> this function setstate the endDate
@@ -419,7 +424,6 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
         'ctgVacation': this.state.motifAbsence,
         'dateDeDepart': this.state.DateDebut,
         'vacationType': "",
-
       };
     }else {
       formData = {
@@ -463,26 +467,26 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
   }
 
-  // get weekend days 
-  public getWeekendDays = (month, year) => {
-    month--;
-    var date = new Date(year, month, 1);
-    var days = [];
-    while (date.getMonth() === month) {
-      // Exclude weekends
-      var tmpDate = date ;            
-      var weekDay = tmpDate.getDay(); // week day
-      var day = tmpDate.getDate(); // day
+  // // get weekend days 
+  // public getWeekendDays = (month, year) => {
+  //   month--;
+  //   var date = new Date(year, month, 1);
+  //   var days = [];
+  //   while (date.getMonth() === month) {
+  //     // Exclude weekends
+  //     var tmpDate = date ;            
+  //     var weekDay = tmpDate.getDay(); // week day
+  //     var day = tmpDate.getDate(); // day
 
-      if (weekDay%6 === 0) { // exclude 0=Sunday and 6=Saturday
-          days.push(day);
-      }
+  //     if (weekDay%6 === 0) { // exclude 0=Sunday and 6=Saturday
+  //         days.push(day);
+  //     }
 
-      date.setDate(date.getDate() + 1);
-    }
+  //     date.setDate(date.getDate() + 1);
+  //   }
 
-    console.log(days)  ;
-  }
+  //   console.log(days)  ;
+  // }
 
 
   // public getDaysOfWeekBetweenDates = (sDate , eDate) => {
@@ -503,6 +507,20 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
   
   //   console.log(daysOfWeek) ;
   // };
+
+
+  // // // // get number of days between two dates exclude weekend
+  // // // public getNumberOfDays = () => {
+  // // //   const dateDebut = this.state.DateDebut;
+  // // //   const dateFin = this.state.DateFin ;
+
+  // // //   // diffrence between two dates
+  // // //   var diffDays = (dateFin.getTime() - dateDebut.getTime()) / (1000 * 3600 * 24) ;
+
+  // // //   // substract two weekend days for every week
+
+
+  // // // }
   
 
   // get all hoidays of current year 
