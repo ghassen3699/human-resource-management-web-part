@@ -254,17 +254,20 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
       const date = Year.toString() + "-" + Month.toString() + "-" + Day.toString()  + " GMT";
       
       const newDateFormat = new Date(date);
-      const diffDays = this.SumVacationDays(this.state.DateDebut, newDateFormat)
-      this.setState({DateFin:newDateFormat, numberOfVacationDays:diffDays});
+      // const diffDays = this.SumVacationDays(this.state.DateDebut, newDateFormat)
+      const numberOfDays = this.getNumberOfDays(this.state.DateDebut, newDateFormat)
+
+      this.setState({DateFin:newDateFormat, numberOfVacationDays:numberOfDays});
     }
+      
   }
 
 
-  public SumVacationDays = (dateDebut, DateFin) => {
-    var diffDays = DateFin.getTime() - dateDebut.getTime();
-    diffDays = diffDays / (1000 * 3600 * 24);
-    return diffDays
-  }
+  // public SumVacationDays = (dateDebut, DateFin) => {
+  //   var diffDays = DateFin.getTime() - dateDebut.getTime();
+  //   diffDays = diffDays / (1000 * 3600 * 24);
+  //   return diffDays
+  // }
 
 
 
@@ -467,61 +470,32 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
   }
 
-  // // get weekend days 
-  // public getWeekendDays = (month, year) => {
-  //   month--;
-  //   var date = new Date(year, month, 1);
-  //   var days = [];
-  //   while (date.getMonth() === month) {
-  //     // Exclude weekends
-  //     var tmpDate = date ;            
-  //     var weekDay = tmpDate.getDay(); // week day
-  //     var day = tmpDate.getDate(); // day
 
-  //     if (weekDay%6 === 0) { // exclude 0=Sunday and 6=Saturday
-  //         days.push(day);
-  //     }
-
-  //     date.setDate(date.getDate() + 1);
-  //   }
-
-  //   console.log(days)  ;
-  // }
-
-
-  // public getDaysOfWeekBetweenDates = (sDate , eDate) => {
-  //   const startDate = new Date(sDate)
-  //   const endDate = new Date(eDate);
-    
-  //   endDate.setDate(endDate.getDate() + 1);
-    
-  //   const daysOfWeek = [];
-    
-  //   let i = 0;
-    
-  //   while (i < 7 && startDate < endDate) {
-  //     daysOfWeek.push(startDate.getDay());
-  //     startDate.setDate(startDate.getDate() + 1);
-  //     i++;
-  //   }
+  // Get number of days between two dates exclude weekends
+  public getNumberOfDays = (startDate, endDate) => {
+    var iWeeks, iDateDiff, iAdjust = 0;
+    var iWeekday1 = startDate.getDay();
+    var iWeekday2 = endDate.getDay();
+    iWeekday1 = (iWeekday1 == 0) ? 7 : iWeekday1; // change Sunday from 0 to 7
+    iWeekday2 = (iWeekday2 == 0) ? 7 : iWeekday2;
+    if ((iWeekday1 > 5) && (iWeekday2 > 5)) iAdjust = 1; // adjustment if both days on weekend
+    iWeekday1 = (iWeekday1 > 5) ? 5 : iWeekday1; // only count weekdays
+    iWeekday2 = (iWeekday2 > 5) ? 5 : iWeekday2;
+ 
+    // calculate differnece in weeks (1000mS * 60sec * 60min * 24hrs * 7 days = 604800000)
+    iWeeks = Math.floor((endDate.getTime() - startDate.getTime()) / 604800000)
+ 
+    if (iWeekday1 <= iWeekday2) {
+      iDateDiff = (iWeeks * 5) + (iWeekday2 - iWeekday1)
+    } else {
+      iDateDiff = ((iWeeks + 1) * 5) - (iWeekday1 - iWeekday2)
+    }
+ 
+    iDateDiff -= iAdjust // take into account both days on weekend
+    return iDateDiff
+  }
   
-  //   console.log(daysOfWeek) ;
-  // };
 
-
-  // // // // get number of days between two dates exclude weekend
-  // // // public getNumberOfDays = () => {
-  // // //   const dateDebut = this.state.DateDebut;
-  // // //   const dateFin = this.state.DateFin ;
-
-  // // //   // diffrence between two dates
-  // // //   var diffDays = (dateFin.getTime() - dateDebut.getTime()) / (1000 * 3600 * 24) ;
-
-  // // //   // substract two weekend days for every week
-
-
-  // // // }
-  
 
   // get all hoidays of current year 
   public getHolidayDays = () => {
