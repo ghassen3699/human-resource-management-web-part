@@ -230,17 +230,43 @@ export default class ModificationConge extends React.Component<IModificationCong
       const date = Year.toString() + "-" + Month.toString() + "-" + Day.toString()  + " GMT";
       
       const newDateFormat = new Date(date);
-      const diffDays = this.SumVacationDays(this.state.DateDebut, newDateFormat)
-      this.setState({DateFin:newDateFormat, numberOfVacationDays:diffDays});
+      // const diffDays = this.SumVacationDays(this.state.DateDebut, newDateFormat)
+      const numberOfDays = this.getNumberOfDays(this.state.DateDebut, newDateFormat)
+
+      this.setState({DateFin:newDateFormat, numberOfVacationDays:numberOfDays});
     }
   }
 
 
-  public SumVacationDays = (dateDebut, DateFin) => {
-    var diffDays = DateFin.getTime() - dateDebut.getTime();
-    diffDays = diffDays / (1000 * 3600 * 24);
-    return diffDays
+  // Get number of days between two dates exclude weekends
+  public getNumberOfDays = (startDate, endDate) => {
+    var iWeeks, iDateDiff, iAdjust = 0;
+    var iWeekday1 = startDate.getDay();
+    var iWeekday2 = endDate.getDay();
+    iWeekday1 = (iWeekday1 == 0) ? 7 : iWeekday1; // change Sunday from 0 to 7
+    iWeekday2 = (iWeekday2 == 0) ? 7 : iWeekday2;
+    if ((iWeekday1 > 5) && (iWeekday2 > 5)) iAdjust = 1; // adjustment if both days on weekend
+    iWeekday1 = (iWeekday1 > 5) ? 5 : iWeekday1; // only count weekdays
+    iWeekday2 = (iWeekday2 > 5) ? 5 : iWeekday2;
+  
+    // calculate differnece in weeks (1000mS * 60sec * 60min * 24hrs * 7 days = 604800000)
+    iWeeks = Math.floor((endDate.getTime() - startDate.getTime()) / 604800000)
+  
+    if (iWeekday1 <= iWeekday2) {
+      iDateDiff = (iWeeks * 5) + (iWeekday2 - iWeekday1)
+    } else {
+      iDateDiff = ((iWeeks + 1) * 5) - (iWeekday1 - iWeekday2)
+    }
+  
+    iDateDiff -= iAdjust // take into account both days on weekend
+    return iDateDiff
   }
+
+  // public SumVacationDays = (dateDebut, DateFin) => {
+  //   var diffDays = DateFin.getTime() - dateDebut.getTime();
+  //   diffDays = diffDays / (1000 * 3600 * 24);
+  //   return diffDays
+  // }
 
 
 

@@ -27,6 +27,7 @@
     "@pnp/polyfill-ie11": "^2.0.2",
     "@pnp/sp": "^2.4.0",
     "@pnp/spfx-controls-react": "^2.5.0",
+    "@types/lodash": "^4.14.191",
     "axios": "^0.21.1",
     "date-holidays": "^3.16.14",
     "import": "0.0.6",

@@ -61,7 +61,7 @@
   }
 
   .row .title {
-    color: #7d2935;
+    color: black;
     font-size: 16px;
     font-weight: bold;
   }
@@ -80,7 +80,7 @@
   }
   .row .data .jour {
     height: 30px;
-    background-color: #7d293620;
+    background-color: gray;
     border: 1px solid #000;
     width: calc(100% - 14px);
     padding: 4px 10px;
@@ -102,7 +102,7 @@
   .row .datarem .search {
     width: calc(100% - 40px);
     height: 30px;
-    background-color: #7d293620;
+    background-color: gray;
     border: 1px solid #000;
     padding: 4px 30px 4px 10px;
     font-size: 16px;
@@ -116,7 +116,7 @@
   .cd {
     font-size: 18px;
     text-transform: uppercase;
-    background-color: #7d2935;
+    background-color: gray;
     color: #fff;
     border: 0;
     padding: 8px 14px;
@@ -131,7 +131,7 @@
   .row .comment .message {
     width: 100%;
     border: 1px solid #000;
-    background-color: #7d293520;
+    background-color: gray;
   }
 
   .ad {
@@ -141,7 +141,7 @@
     border-collapse: collapse;
   }
   .ad .title {
-    background-color: #7d2935;
+    background-color: gray;
     color: #fff;
     text-align: left;
     padding: 8px 16px;
@@ -164,7 +164,7 @@
   }
 
   .btn {
-    background-color: #7d2935;
+    background-color: gray;
     border: 0;
     color: #fff;
     font-size: 18px;
@@ -176,7 +176,7 @@
   }
 
   .btnCal {
-    background-color: #7d2935;
+    background-color: gray;
     border: 0;
     color: #fff;
     margin-top: 36px;
@@ -195,15 +195,15 @@
     text-align: right;
   }
   .inputcolor {
-    background-color: #7d2935 !important;
+    background-color: gray !important;
     background: none !important;
   }
 
   .btn:disabled,
   .btn[disabled] {
-    border: 1px solid #7d2935;
+    border: 1px solid gray;
     background-color: #cccccc;
-    color: #7d2935;
+    color: gray;
   }
 
   .spinner {

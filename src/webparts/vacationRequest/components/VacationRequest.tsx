@@ -124,9 +124,9 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
   
 
 
-  // Condition for disable endDate if user select "Demi Journée","Naissance","Mariage","Décès" or "Circoncision"
+  // Condition for disable endDate if user select "half day","birth","Mariage","Décès" or "Circoncision"
   private disableEndDate = () => {
-    if ((this.state.motifAbsence === "Demi journée") || (this.state.motifAbsence === 'Naissance') || (this.state.motifAbsence === 'Mariage') || ((this.state.motifAbsence === 'Décès')) || ((this.state.motifAbsence === 'Circoncision'))) {
+    if ((this.state.motifAbsence === "half day") || (this.state.motifAbsence === 'birth') || (this.state.motifAbsence === 'wedding') || ((this.state.motifAbsence === 'death')) || ((this.state.motifAbsence === 'Circumcision'))) {
       return true;
     }
     return false;
@@ -139,29 +139,29 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     var test = true
     switch (this.state.motifAbsence) {
       // 1
-      case "Demi journée":
-      case "Naissance":
-      case "Circoncision":
+      case "half day":
+      case "birth":
+      case "Circumcision":
         // test DA, remplacer par
-        if ((this.state.DateDebut !== undefined)&&(this.state.replacedBy.length > 0)){
+        if ((this.state.DateDebut !== null)&&(this.state.replacedBy.length > 0)){
           test = false
         }
       break;
 
       // 2
-      case "Mariage":
-      case "Décès":
+      case "wedding":
+      case "death":
         // test Décès options
         // test DA, REMP, Plus details
-        if (this.state.motifAbsence === "Décès"){
-          if ((this.state.DateDebut !== undefined) && (this.state.replacedBy.length > 0) && (this.state.decesOptionData !== "")){
+        if (this.state.motifAbsence === "death"){
+          if ((this.state.DateDebut !== null) && (this.state.replacedBy.length > 0) && (this.state.decesOptionData !== "")){
             test = false
           }
         }
         // test Mariage options
         // test DA, REMP, Plus details
-        if (this.state.motifAbsence === "Mariage"){
-          if ((this.state.DateDebut !== undefined) && (this.state.replacedBy.length > 0) && (this.state.mariageOtionData !== "")){
+        if (this.state.motifAbsence === "wedding"){
+          if ((this.state.DateDebut !== null) && (this.state.replacedBy.length > 0) && (this.state.mariageOtionData !== "")){
             test = false
           }
 
@@ -169,17 +169,17 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
       break;
       
       // 3
-      case "Maladie":
+      case "illness":
         // test DA, DF, REMP, File
-        if ((this.state.DateDebut !== undefined) && (this.state.DateFin !== undefined) && (this.state.replacedBy.length > 0) && (this.state.fileName !== "") && (this.state.numberOfVacationDays > 0)){
+        if ((this.state.DateDebut !== null) && (this.state.DateFin !== null) && (this.state.replacedBy.length > 0) && (this.state.fileName !== "") && (this.state.numberOfVacationDays > 0)){
           test = false
         }
       break;
       
       // 4
-      case "Congé payé":
+      case "paid vacation":
         // tester DA, DF, REMP 
-        if ((this.state.DateDebut !== undefined) && (this.state.DateFin !== undefined) && (this.state.replacedBy.length > 0) && (this.state.numberOfVacationDays > 0)){
+        if ((this.state.DateDebut !== null) && (this.state.DateFin !== null) && (this.state.replacedBy.length > 0) && (this.state.numberOfVacationDays > 0)){
           test = false
         }
       break; 
@@ -195,22 +195,22 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     if (this.state.disabledDays){
       var defaultNumberOfVacationDay, endDate
       switch (this.state.motifAbsence) {
-        case 'Demi journée':
+        case 'half day':
           defaultNumberOfVacationDay = 0.5;
           endDate = beginDate
           break;
 
-        case 'Naissance':
+        case 'birth':
           defaultNumberOfVacationDay = 2;
           endDate = addDays(beginDate,defaultNumberOfVacationDay)
         break;
 
-        case 'Circoncision':
+        case 'Circumcision':
           defaultNumberOfVacationDay = 1;
           endDate = addDays(beginDate,defaultNumberOfVacationDay)
         break;
 
-        case 'Mariage':
+        case 'wedding':
           if (this.state.mariageOtionData !== ""){
             defaultNumberOfVacationDay = this.state.numberOfVacationDays;
             endDate = addDays(beginDate,defaultNumberOfVacationDay)
@@ -218,7 +218,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
           
         break;
 
-        case 'Décès':
+        case 'death':
           if (this.state.decesOptionData !== ""){
             defaultNumberOfVacationDay = this.state.numberOfVacationDays;
             endDate = addDays(beginDate,defaultNumberOfVacationDay)
@@ -240,7 +240,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
       // convert the type of date seleted
       const date = Year.toString() + "-" + Month.toString() + "-" + Day.toString()  + " GMT";
       const newDateFormat = new Date(date);
-      if (this.state.motifAbsence === "Congé payé" || this.state.motifAbsence === "Maladie") {
+      if (this.state.motifAbsence === "paid vacation" || this.state.motifAbsence === "illness") {
         this.setState({DateDebut:newDateFormat, DateFin:null, numberOfVacationDays:0});
       }else {
         this.setState({DateDebut:newDateFormat});
@@ -330,15 +330,15 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     var disabledDays = false
     if (this.state.motifAbsence !== ""){
       switch (this.state.motifAbsence) {
-        case 'Demi journée':
+        case 'half day':
           defaultNumberOfVacationDay = 0.5;
           disabledDays = true
           break;
-        case 'Naissance':
+        case 'birth':
           defaultNumberOfVacationDay = 2;
           disabledDays = true
         break;
-        case 'Circoncision':
+        case 'Circumcision':
           defaultNumberOfVacationDay = 1;
           disabledDays = true
         break;
@@ -353,10 +353,10 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     var defaultNumberOfVacationDay = 0
     if (this.state.mariageOtionData !== ""){
       switch (this.state.mariageOtionData) {
-        case 'Mariage':
+        case 'wedding':
           defaultNumberOfVacationDay = 3;
           break;
-        case 'Mariage d’un enfant':
+        case 'child marriage':
           defaultNumberOfVacationDay = 1;
         break;
       }
@@ -378,23 +378,23 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
         case 'Parents':
           defaultNumberOfVacationDay = 3;
           break;
-        case 'Conjoint':
+        case 'Spouse':
           defaultNumberOfVacationDay = 3;
         break;
-        case 'Enfants':
+        case 'Childrens':
           defaultNumberOfVacationDay = 3;
         break;
 
-        case 'Grands-parents':
+        case 'Grand-parents':
           defaultNumberOfVacationDay = 2;
         break;
-        case 'Frères':
+        case 'Brothers':
           defaultNumberOfVacationDay = 2;
         break;
-        case 'Sœurs':
+        case 'sisters':
           defaultNumberOfVacationDay = 2;
         break;
-        case 'Petits-enfants':
+        case 'small-child':
           defaultNumberOfVacationDay = 2;
         break; 
       }
@@ -414,7 +414,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     if(this.state.decesOptionData !== "") detailAbsence = this.state.decesOptionData
     if(this.state.mariageOtionData !== "") detailAbsence = this.state.mariageOtionData
 
-    if (this.state.motifAbsence === "Congé payé" || this.state.motifAbsence === "Demi journée"  || this.state.motifAbsence === "Naissance" || this.state.motifAbsence === "Circoncision" ){
+    if (this.state.motifAbsence === "paid vacation" || this.state.motifAbsence === "half day"  || this.state.motifAbsence === "birth" || this.state.motifAbsence === "Circumcision" ){
       formData = {
         'Comment': this.state.comment,
         'EndDate': this.state.DateFin,
@@ -452,7 +452,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     if (this.state.fileName !== ''){
       const item = Web(this.props.url).lists.getByTitle('vacationRequest').items.getById(sendData.data.ID);
       const result = await item.attachmentFiles.add(this.state.fileName,"add file");
-      console.log(result)
+      // console.log(result)
     }
 
     this.setState({alertShowed:true})
@@ -502,7 +502,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     var hd = new Holidays('TN');
     var currentYear = new Date();
     var currentYearHolidays = hd.getHolidays(currentYear.getFullYear());
-    console.log(currentYearHolidays)
+    // console.log(currentYearHolidays)
   }
 
 
@@ -536,34 +536,62 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     });
 
 
+    // // options of Absence
+    // const motifAbsence = [
+    //   {key: "paid vacation",text: "paid vacation"},
+    //   {key: "half day", text: "half day"}, 
+    //   {key: "illness", text: "illness"}, 
+    //   {key: "birth", text: "birth"}, 
+    //   {key: "Mariage", text: "Mariage"}, 
+    //   {key: "Décès", text: "Décès"}, 
+    //   {key: "Circoncision", text: "Circoncision"},
+    // ];
+    
     // options of Absence
     const motifAbsence = [
-      {key: "Congé payé",text: "Congé payé"},
-      {key: "Demi journée", text: "Demi journée"}, 
-      {key: "Maladie", text: "Maladie"}, 
-      {key: "Naissance", text: "Naissance"}, 
-      {key: "Mariage", text: "Mariage"}, 
-      {key: "Décès", text: "Décès"}, 
-      {key: "Circoncision", text: "Circoncision"},
+      {key: "paid vacation",text: "paid vacation"},
+      {key: "half day", text: "half day"}, 
+      {key: "illness", text: "illness"}, 
+      {key: "birth", text: "birth"}, 
+      {key: "wedding", text: "wedding"}, 
+      {key: "death", text: "death"}, 
+      {key: "Circumcision", text: "Circumcision"},
     ];
 
+
+    // // the other options when user choice is "Décès"
+    // const decesOptions = [
+    //   { key: "Parents", text: "Parents", },
+    //   { key: "Conjoint", text: "Conjoint", },
+    //   { key: "Enfants", text: "Enfants", },
+    //   { key: "Grands-parents", text: "Grands-parents", },
+    //   { key: "Frères", text: "Frères", },
+    //   { key: "Sœurs", text: "Sœurs", },
+    //   { key: "Petits-enfants", text: "Petits-enfants", }
+    // ];
 
     // the other options when user choice is "Décès"
     const decesOptions = [
       { key: "Parents", text: "Parents", },
-      { key: "Conjoint", text: "Conjoint", },
-      { key: "Enfants", text: "Enfants", },
-      { key: "Grands-parents", text: "Grands-parents", },
-      { key: "Frères", text: "Frères", },
-      { key: "Sœurs", text: "Sœurs", },
-      { key: "Petits-enfants", text: "Petits-enfants", }
+      { key: "Spouse", text: "Spouse", },
+      { key: "Childrens", text: "Childrens", },
+      { key: "Grand-parents", text: "Grand-parents", },
+      { key: "Brothers", text: "Brothers", },
+      { key: "sisters", text: "sisters", },
+      { key: "small-child", text: "small-child", }
     ];
 
 
+    // // the other options when user choice is "Mariage"
+    // const mariageOptions =  [
+    //   { key: "Mariage", text: "Mariage", },
+    //   { key: "Mariage d’un enfant", text: "Mariage d’un enfant", }
+    // ];
+
     // the other options when user choice is "Mariage"
     const mariageOptions =  [
-      { key: "Mariage", text: "Mariage", },
-      { key: "Mariage d’un enfant", text: "Mariage d’un enfant", }
+      { key: "wedding", text: "wedding", },
+      { key: "child marriage", text: "child marriage", }
     ];
 
 
@@ -588,13 +616,8 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     // get the theme of sharepoint
     const theme = getTheme();
 
-    this.numberOfVacationDays();
-    // this.getHolidayDays();     // bien 
-    // this.getWeekendDays(1,2023);
-
-    // this.getDaysOfWeekBetweenDates("2023-01-11", "2023-01-30")
-
-
+    this.numberOfVacationDays();   // Get number of vacation days for current user
+    // this.getHolidayDays();     // get holidays days of year in current country
     
 
     return (
@@ -605,7 +628,8 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
         <div className={stylescustom.vacationRequest}>
           <div className={stylescustom.DC}>
             <p className={stylescustom.datenow}>Date : <span className="date-time">{CurrentDate}</span></p>
-            <div className={stylescustom.titleh1}>Demande de congé </div>
+            {/* <div className={stylescustom.titleh1}>Demande de congé </div> */}
+            <div className={stylescustom.titleh1}>Leave request</div>
             <div className={stylescustom.line}></div>
 
 
@@ -614,19 +638,23 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
                 <table className={stylescustom.table}>
                   <tbody>
                     <tr>
-                      <td className={stylescustom.key}>Nom de l'employé</td>
+                      {/* <td className={stylescustom.key}>Nom de l'employé</td> */}
+                      <td className={stylescustom.key}>employee name</td>
                       <td className={stylescustom.value}>{this.state.currentUserDisplayName} </td>
                     </tr>
                     <tr>
-                      <td className={stylescustom.key}>Adresse email de l'organisation</td>
+                      {/* <td className={stylescustom.key}>Adresse email de l'organisation</td> */}
+                      <td className={stylescustom.key}>Organization email address</td>
                       <td className={stylescustom.value}>{this.state.currentUserPrincipalName}</td>
                     </tr>
                     <tr>
-                      <td className={stylescustom.key}>ID employé</td>
+                      {/* <td className={stylescustom.key}>ID employé</td> */}
+                      <td className={stylescustom.key}>Employee ID</td>
                       <td className={stylescustom.value}>{this.state.currentUserID}</td>
                     </tr>
                     <tr>
-                      <td className={stylescustom.key}>Adresse email</td>
+                      {/* <td className={stylescustom.key}>Adresse email</td> */}
+                      <td className={stylescustom.key}>E-mail address</td>
                       <td className={stylescustom.value}>{this.state.currentUserMail}</td>
                     </tr>
                   </tbody>
@@ -635,12 +663,14 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
             </div>
 
 
-            <p className={stylescustom.indique}>* Indique un champ obligatoire</p>
+            {/* <p className={stylescustom.indique}>* Indique un champ obligatoire</p> */}
+            <p className={stylescustom.indique}>* Required field</p>
             <div className={stylescustom.row}>
 
               {/* Select absence Motif */}
               <div className={stylescustom.data}>
-                <p className={stylescustom.title}>* Motif d'absence :</p>
+                {/* <p className={stylescustom.title}>* Motif d'absence :</p> */}
+                <p className={stylescustom.title}>* Reason for absence :</p>
                 <Dropdown
                   styles={dropdownStyles}
                   // onRenderTitle={this.onRenderTitle}
@@ -655,8 +685,9 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
 
               {/* ********* Show other décès options when user select décès in motif d'absence ********* */}
-              {this.state.motifAbsence == 'Décès' && <div className={stylescustom.data}>
-                <p className={stylescustom.title}>* Plus de détails</p>
+              {this.state.motifAbsence == 'death' && <div className={stylescustom.data}>
+                {/* <p className={stylescustom.title}>* Plus de détails</p> */}
+                <p className={stylescustom.title}>* More details</p>
                 <Dropdown
                   styles={dropdownStyles}
                   // onChange={this.onSelectionChanged}
@@ -675,8 +706,9 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
 
               {/* ********* Show other mariage options when user select mariage in motif d'absence ********* */}
-              {this.state.motifAbsence == 'Mariage' && <div className={stylescustom.data}>
-                <p className={stylescustom.title}>* Plus de détails</p>
+              {this.state.motifAbsence == 'wedding' && <div className={stylescustom.data}>
+                {/* <p className={stylescustom.title}>* Plus de détails</p> */}
+                <p className={stylescustom.title}>* More details</p>
                 <Dropdown
                   styles={dropdownStyles}
                   // onChange={this.onSelectionChanged}
@@ -693,7 +725,8 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
 
               <div className={stylescustom.data}>
-                <p className={stylescustom.title}>* Date debut :</p>
+                {/* <p className={stylescustom.title}>* Date debut :</p> */}
+                <p className={stylescustom.title}>* Start date :</p>
                 <DatePicker
                   className={controlClass.TextField}
                   allowTextInput={false}
@@ -709,7 +742,8 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
 
               <div className={stylescustom.data}>
-                <p className={stylescustom.title}>* Date Fin :</p>
+                {/* <p className={stylescustom.title}>* Date Fin :</p> */}
+                <p className={stylescustom.title}>* End date :</p>
                 <DatePicker
                   className={controlClass.TextField}
                   allowTextInput={false}
@@ -726,9 +760,10 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
               <div className={stylescustom.data}>
                 <p className={stylescustom.title}>
-                  {this.state.motifAbsence === "Maladie" && <span>*</span>}Attacher un élément justificatif :
+                  {this.state.motifAbsence === "illness" && <span>*</span>}Attach a supporting document :
                 </p>
-                <label htmlFor="uploadFile" className={stylescustom.btn}>Choisir un élément</label>
+                {/* <label htmlFor="uploadFile" className={stylescustom.btn}>Choisir un élément</label> */}
+                <label htmlFor="uploadFile" className={stylescustom.btn}>Choose an item</label>
                 <input type="file" id="uploadFile" style={{ display: 'none' }}
                   accept=".jpg, .jpeg, .png , .pdf , .doc ,.docx"
                   onChange={(e) => { this.addFile(e); }} 
@@ -745,7 +780,8 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
             <div className={stylescustom.row}>
               <div className={stylescustom.data}>
-                <p className={stylescustom.title}>Jours :</p>
+                {/* <p className={stylescustom.title}>Jours :</p> */}
+                <p className={stylescustom.title}>Days :</p>
 
                 {/* If user Select a vacation d with default days */}
                 {this.state.disabledDays && <TextField className={controlClass.TextField} disabled={this.state.disabledDays} value={this.state.numberOfVacationDays.toString()} />}
@@ -771,7 +807,8 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
             <div className={stylescustom.row}>
               <div className={stylescustom.datarem}>
-                <p className={stylescustom.title}>Remplacé par :</p>
+                {/* <p className={stylescustom.title}>Remplacé par :</p> */}
+                <p className={stylescustom.title}>Replaced by :</p>
                 <PeoplePicker
                   context={this.props.context}
                   personSelectionLimit={1}
@@ -792,7 +829,8 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
             <div className={stylescustom.row}>
               <div className={stylescustom.comment}>
-                <p className={stylescustom.title}>Commentaire :</p>
+                {/* <p className={stylescustom.title}>Commentaire :</p> */}
+                <p className={stylescustom.title}>Comment :</p>
                 <TextField className={controlClass.TextField} value={this.state.comment} multiline onChange={this.handleChange} />
               </div>
             </div>
@@ -800,11 +838,13 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
             <table className={stylescustom.ad}>
               <thead>
-                <th className={stylescustom.title} >Autres détails</th>
+                {/* <th className={stylescustom.title} >Autres détails</th> */}
+                <th className={stylescustom.title} >Other details</th>
               </thead>
               <tbody className={stylescustom.tbody}>
                 <tr>
-                  <td className={stylescustom.key}>Solde des congés </td>
+                  {/* <td className={stylescustom.key}>Solde des congés </td> */}
+                  <td className={stylescustom.key}>Leave balance </td>
                   <td className={stylescustom.value}>{this.state.numberOfVacationDaysForUser}</td>
                 </tr>
               </tbody>
@@ -814,12 +854,20 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
             <div className={stylescustom.btncont}>
               {/* {this.state.loadingFile ? <Spinner size={SpinnerSize.large} className={stylescustom.spinner} /> : ""} */}
-              <button className={stylescustom.btn} onClick={()=>this.collectAllData()} disabled={this.disabledSubmitButton()} >soumettre la demande</button>
+              {/* <button className={stylescustom.btn} onClick={()=>this.collectAllData()} disabled={this.disabledSubmitButton()} >soumettre la demande</button> */}
+              <button className={stylescustom.btn} onClick={()=>this.collectAllData()} disabled={this.disabledSubmitButton()} >submit request</button>
             </div>
 
 
-            <SweetAlert
+            {/* <SweetAlert
             show={this.state.alertShowed} title="Demande de congé" text="Demande envoyée"
+            confirmButtonColor='#7D2935'
+            onConfirm={() => window.open(this.props.url + "/SitePages/Vacation-List.aspx", "_self")}
+            imageWidth="200"
+            imageHeight="200"
+            /> */}
+            <SweetAlert
+            show={this.state.alertShowed} title="Leave request" text="Request submited"
             confirmButtonColor='#7D2935'
             onConfirm={() => window.open(this.props.url + "/SitePages/Vacation-List.aspx", "_self")}
             imageWidth="200"

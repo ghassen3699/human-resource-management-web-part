@@ -19,7 +19,6 @@ import {
 } from "office-ui-fabric-react";
 import { DatePicker, IDatePickerStrings, IDatePickerStyles, IDatePickerStyleProps } from 'office-ui-fabric-react/lib/DatePicker';
 import { Dropdown, IDropdownOption, IDropdownProps, IDropdownStyles } from 'office-ui-fabric-react/lib/Dropdown';
-
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import * as strings from 'VacationListUserWebPartStrings';
 import { MSGraphClient, SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
@@ -36,6 +35,16 @@ export default class VacationListUser extends React.Component<IVacationListUserP
     dateFin: null ,
     filterStatus: "",
     status: "Tous",
+
+
+    // // Pagination params 
+    // itemCount : 0,     // Lenght of vacation list user
+    // pageSize: 7,       // size of page in vacation list table
+    // currentPage: 1,    // current page in the pagination
+    // pagesCount: 0,     // number of pages in pagination
+
+    currentPage: 1,
+    recordsPerPage: 7,
 
   }
 
@@ -64,7 +73,10 @@ export default class VacationListUser extends React.Component<IVacationListUserP
   public getVacationData = async() => {
     let userID = (await Web(this.props.url).currentUser()).Id
     const vacationRequests = await Web(this.props.url).lists.getByTitle('vacationRequest').items.filter("AuthorId eq " + userID)();
-    this.setState({vacationRequestsData: vacationRequests, VacationListUserFilter: vacationRequests})
+    this.setState({
+      vacationRequestsData: vacationRequests, 
+      VacationListUserFilter: vacationRequests,
+    })
   }
 
 
@@ -181,10 +193,43 @@ export default class VacationListUser extends React.Component<IVacationListUserP
   }
 
 
+  // // Increment pagination in vacation list 
+  // public paginationHandleClickIncrement = (pageNumber, itemCount, pagesCount) => {
+  //   const startIndex = (pageNumber - 1) * this.state.pageSize
+  //   console.log(startIndex)
+  //   const data = this.state.VacationListUserFilter.slice(startIndex,this.state.pageSize)
+  //   this.setState({currentPage:pageNumber+1})
+  //   console.log('current page',this.state.currentPage)
+  //   console.log('data',data)
+  // }
+
+  // // decrement pagination in vacation list
+  // public paginationHandleClickDecrement = (pageNumber, itemCount, pagesCount) => {
+  //   if (this.state.currentPage !== 0){
+  //     this.setState({currentPage:pageNumber-1})
+  //     console.log(this.state.currentPage)
+  //   }
+
+  // }
+
+
+  public decrementPagination = (currentPage, indexOfLastRecord, indexOfFirstRecord) => {
+    this.setState({currentPage:currentPage - 1})
+  }
+
+  public incrementPagination = (currentPage, indexOfLastRecord, indexOfFirstRecord) => {
+    var data = this.state.VacationListUserFilter.slice(indexOfFirstRecord, indexOfLastRecord)
+    console.log(data)
+    this.setState({
+      currentPage:currentPage + 1,
+    })
+  }
+
+
   // update Get Users Stat when initialise page
   componentDidMount(): void {
     this.getUsers();
-    this.getVacationData()
+    this.getVacationData();
   }
 
 
@@ -211,12 +256,14 @@ export default class VacationListUser extends React.Component<IVacationListUserP
       invalidInputErrorMessage: 'Invalid date format.'
     };
 
+    const indexOfLastRecord = this.state.currentPage * this.state.recordsPerPage
+    const indexOfFirstRecord = indexOfLastRecord - this.state.recordsPerPage;
+    
 
     return (
         <div className={styles.vacationListUser}>
           <div className={styles.title}><strong>Filtres</strong></div>
           <div className={styles.filters}>
-
             <label className={styles.title}>Statut :  &nbsp;</label>
             <Dropdown
                 styles={dropdownStyles}
@@ -326,9 +373,9 @@ export default class VacationListUser extends React.Component<IVacationListUserP
 
 
           <div className={styles.paginations}>
-            <button className={styles.pagination}>Prev</button>
+            <button className={styles.pagination} onClick={() => this.decrementPagination(this.state.currentPage, indexOfLastRecord, indexOfFirstRecord)}>Prev</button> 
             <span id="page"></span>
-            <button className={styles.pagination}>Next</button>
+            <button className={styles.pagination} onClick={() => this.incrementPagination(this.state.currentPage, indexOfLastRecord, indexOfFirstRecord)}>Next</button>
           </div>
           
           {/* <div className={styles.cercleBleu}></div>En cours */}
