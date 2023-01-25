@@ -193,24 +193,7 @@ export default class VacationListUser extends React.Component<IVacationListUserP
   }
 
 
-  // // Increment pagination in vacation list 
-  // public paginationHandleClickIncrement = (pageNumber, itemCount, pagesCount) => {
-  //   const startIndex = (pageNumber - 1) * this.state.pageSize
-  //   console.log(startIndex)
-  //   const data = this.state.VacationListUserFilter.slice(startIndex,this.state.pageSize)
-  //   this.setState({currentPage:pageNumber+1})
-  //   console.log('current page',this.state.currentPage)
-  //   console.log('data',data)
-  // }
 
-  // // decrement pagination in vacation list
-  // public paginationHandleClickDecrement = (pageNumber, itemCount, pagesCount) => {
-  //   if (this.state.currentPage !== 0){
-  //     this.setState({currentPage:pageNumber-1})
-  //     console.log(this.state.currentPage)
-  //   }
-
-  // }
 
 
   public decrementPagination = (currentPage, indexOfLastRecord, indexOfFirstRecord) => {
@@ -222,15 +205,32 @@ export default class VacationListUser extends React.Component<IVacationListUserP
     console.log(data)
     this.setState({
       currentPage:currentPage + 1,
+      // VacationListUserFilter: data
     })
+    // console.log(this.state.VacationListUserFilter)
   }
+
+
+  // public initialisationData = () => {
+  //   console.log(this.state.VacationListUserFilter.length)
+  //   if (this.state.VacationListUserFilter.length >= this.state.recordsPerPage){
+  //     var data = []
+  //     for (let i = 0; i < this.state.VacationListUserFilter.length; i++) {
+  //       data.push(this.state.VacationListUserFilter[i])
+  //     }
+  //     this.setState({VacationListUserFilter:data})
+  //   }
+  // }
 
 
   // update Get Users Stat when initialise page
   componentDidMount(): void {
     this.getUsers();
     this.getVacationData();
+    // this.initialisationData();
   }
+
+  
 
 
   public render(): React.ReactElement<IVacationListUserProps> {

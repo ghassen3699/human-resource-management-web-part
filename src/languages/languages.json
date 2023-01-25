@@ -1,0 +1,30 @@
+{
+    
+    "frenshOptions" : {
+        "Congé payé": "Congé payé",
+        "Demi journée": "Demi journée",
+        "Maladie":"Maladie",
+        "Naissance":"Naissance",
+        "Mariage": "Mariage", 
+        "Décès": "Décès", 
+        "Circoncision": "Circoncision", 
+        "Parents": "Parents", 
+        "Conjoint": "Conjoint", 
+        "Enfants": "Enfants", 
+        "Grands-parents": "Grands-parents",
+        "Frères": "Frères", 
+        "Sœurs": "Sœurs", 
+        "Petits-enfants": "Petits-enfants",
+        "Mariage d’un enfant":"Mariage d’un enfant"
+    },
+    
+    "englishOptions" : {
+        "Congé payé":"Congé payé"
+    },
+
+    
+    "arabeOptions" : {
+        "Congé payé":"Congé payé"
+    }
+    
+}

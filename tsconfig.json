@@ -5,6 +5,8 @@
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "jsx": "react",
     "declaration": true,
     "sourceMap": true,
@@ -30,7 +32,8 @@
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.tsx"
+    "src/**/*.tsx",
+    "src/*.json"
   ],
   "exclude": [
     "node_modules",

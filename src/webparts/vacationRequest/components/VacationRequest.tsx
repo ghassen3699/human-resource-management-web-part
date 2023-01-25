@@ -35,6 +35,8 @@ export interface IUser {
   displayName: string;
   mail:string;
 }
+import languages from "../../../languages/languages.json"
+
 
 //import { IUserPresenceState } from './IVacationRequestProps';
 
@@ -85,9 +87,18 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     disabledDays: false,
     disableSubmitButton: true,
     alertShowed: false,
-    ////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
 
-    errorMessage : ""
+    errorMessage : "",
+
+
+    ///////////////////////////// language configuration //////////////////////////////
+
+    LanguageSelected: 0,
+    
+    ///////////////////////////////////////////////////////////////////////////////////
+
+
   };
   public user: IUser[] = [];
 
@@ -505,11 +516,35 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     // console.log(currentYearHolidays)
   }
 
+  public initialiseCurrentLanguage = () => {
+    var languageSelectedID = this.props.LanguageSelected
+    switch (languageSelectedID) {
+      // Frensh language
+      case 1:
+        console.log(1)
+      break;
+
+      // Arabic Language
+      case 2:
+        console.log(2)
+
+      break;
+      
+      // English Language
+      case 3:
+        console.log(3)
+
+      break;
+    };
+
+  }
+
 
 
   // update Get Users Stat when initialise page
   componentDidMount(): void {
     this.getUsers();
+    this.initialiseCurrentLanguage();
   }
 
 
@@ -625,11 +660,12 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
         className="App"
         style={{ background: theme.semanticColors.bodyBackground, color: theme.semanticColors.bodyText }}
       >
+        {console.log(navigator.language)}
         <div className={stylescustom.vacationRequest}>
           <div className={stylescustom.DC}>
             <p className={stylescustom.datenow}>Date : <span className="date-time">{CurrentDate}</span></p>
             {/* <div className={stylescustom.titleh1}>Demande de congé </div> */}
-            <div className={stylescustom.titleh1}>Leave request</div>
+            <div className={stylescustom.titleh1}>Leave request {this.props.LanguageSelected}</div>
             <div className={stylescustom.line}></div>
 
 
