@@ -15,7 +15,25 @@
         "Frères": "Frères", 
         "Sœurs": "Sœurs", 
         "Petits-enfants": "Petits-enfants",
-        "Mariage d’un enfant":"Mariage d’un enfant"
+        "Mariage d’un enfant":"Mariage d’un enfant",
+
+        "TitreDuPage": "Demande de congé",
+        "EmployeeName": "Nom de l'employé",
+        "EmailOrganisation": "Adresse e-mail de l'organisation",
+        "EmployeeID": "ID d'employé",
+        "Email": "Adresse e-mail",
+        "Champs": "champs requis",
+        "Reason1": "Raison de l'absence",
+        "Reason2": "options",
+        "StartDate": "Date de début",
+        "EndDate": "Date de fin",
+        "Attach": "pièce justificative",
+        "Jours": "Jours",
+        "RemplacePar": "Remplacé par",
+        "Comment": "Commentaire",
+        "Other details": "Autres détails",
+        "Solde": "Solde de congé",
+        "Enregistrer": "soumettre la demande"
     },
     
     "englishOptions" : {

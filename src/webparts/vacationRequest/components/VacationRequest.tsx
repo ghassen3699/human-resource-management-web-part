@@ -93,9 +93,43 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
 
     ///////////////////////////// language configuration //////////////////////////////
-
     LanguageSelected: 0,
-    
+    ///////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////// file Language Data   ////////////////////////////////
+    Congepaye: "",
+    DemiJournee: "",
+    Maladie: "",
+    Naissance: "",
+    Mariage: "",
+    Deces: "",
+    Circonsion: "",
+    Parents: "",
+    Conjoint: "",
+    Enfants: "",
+    GrandParent: "",
+    Freres: "",
+    Soeurs:"",
+    PetitEnfants: "",
+    MariageEnfant: "",
+
+    TitreDuPage: "",
+    EmployeeName: "",
+    EmailOrganisation: "",
+    EmployeeID: "",
+    Email: "",
+    Champs: "",
+    Reason1: "",
+    Reason2: "",
+    StartDate: "",
+    EndDate: "",
+    Attach: "",
+    Jours: "",
+    RemplacePar: "",
+    CommentFile: "",
+    OtherDetails: "",
+    Solde: "",
+    Enregistrer: ""
     ///////////////////////////////////////////////////////////////////////////////////
 
 
@@ -518,10 +552,47 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
   public initialiseCurrentLanguage = () => {
     var languageSelectedID = this.props.LanguageSelected
-    switch (languageSelectedID) {
+    // console.log(languages["frenshOptions"]['TitreDuPage'])
+
+    switch (languageSelectedID) {     ////// A completer 
       // Frensh language
       case 1:
-        console.log(1)
+        // update file text
+        this.setState({
+          Congepaye: languages["frenshOptions"]['Congé payé'],
+          DemiJournee: languages["frenshOptions"]['Demi journée'],
+          Maladie: languages["frenshOptions"]['Maladie'],
+          Naissance: languages["frenshOptions"]['Naissance'],
+          Mariage: languages["frenshOptions"]['Mariage'],
+          Deces: languages["frenshOptions"]['Décès'],
+          Circonsion: languages["frenshOptions"]['Congé'],
+          Parents: languages["frenshOptions"]['Congé'],
+          Conjoint: languages["frenshOptions"]['Congé'],
+          Enfants: languages["frenshOptions"]['Congé'],
+          GrandParent: languages["frenshOptions"]['Congé'],
+          Freres: languages["frenshOptions"]['Congé'],
+          Soeurs: languages["frenshOptions"]['Congé'],
+          PetitEnfants: languages["frenshOptions"]['Congé'],
+          MariageEnfant: languages["frenshOptions"]['Congé'],
+
+          TitreDuPage: languages["frenshOptions"]['Congé'],
+          EmployeeName: languages["frenshOptions"]['Congé'],
+          EmailOrganisation: languages["frenshOptions"]['Congé'],
+          EmployeeID: languages["frenshOptions"]['Congé'],
+          Email: languages["frenshOptions"]['Congé'],
+          Champs: languages["frenshOptions"]['Congé'],
+          Reason1: languages["frenshOptions"]['Congé'],
+          Reason2: languages["frenshOptions"]['Congé'],
+          StartDate: languages["frenshOptions"]['Congé'],
+          EndDate: languages["frenshOptions"]['Congé'],
+          Attach: languages["frenshOptions"]['Congé'],
+          Jours: languages["frenshOptions"]['Congé'],
+          RemplacePar: languages["frenshOptions"]['Congé'],
+          CommentFile: languages["frenshOptions"]['Congé'],
+          OtherDetails: languages["frenshOptions"]['Congé'],
+          Solde: languages["frenshOptions"]['Congé'],
+          Enregistrer: languages["frenshOptions"]['Congé']
+        })
       break;
 
       // Arabic Language
@@ -660,7 +731,6 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
         className="App"
         style={{ background: theme.semanticColors.bodyBackground, color: theme.semanticColors.bodyText }}
       >
-        {console.log(navigator.language)}
         <div className={stylescustom.vacationRequest}>
           <div className={stylescustom.DC}>
             <p className={stylescustom.datenow}>Date : <span className="date-time">{CurrentDate}</span></p>
