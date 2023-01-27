@@ -554,44 +554,44 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     var languageSelectedID = this.props.LanguageSelected
     // console.log(languages["frenshOptions"]['TitreDuPage'])
 
-    switch (languageSelectedID) {     ////// A completer 
+    switch (languageSelectedID) {    
       // Frensh language
       case 1:
         // update file text
         this.setState({
-          Congepaye: languages["frenshOptions"]['Congé payé'],
-          DemiJournee: languages["frenshOptions"]['Demi journée'],
-          Maladie: languages["frenshOptions"]['Maladie'],
-          Naissance: languages["frenshOptions"]['Naissance'],
-          Mariage: languages["frenshOptions"]['Mariage'],
-          Deces: languages["frenshOptions"]['Décès'],
-          Circonsion: languages["frenshOptions"]['Congé'],
-          Parents: languages["frenshOptions"]['Congé'],
-          Conjoint: languages["frenshOptions"]['Congé'],
-          Enfants: languages["frenshOptions"]['Congé'],
-          GrandParent: languages["frenshOptions"]['Congé'],
-          Freres: languages["frenshOptions"]['Congé'],
-          Soeurs: languages["frenshOptions"]['Congé'],
-          PetitEnfants: languages["frenshOptions"]['Congé'],
-          MariageEnfant: languages["frenshOptions"]['Congé'],
+          // Congepaye: languages["frenshOptions"]['Congé payé'],
+          // DemiJournee: languages["frenshOptions"]['Demi journée'],
+          // Maladie: languages["frenshOptions"]['Maladie'],
+          // Naissance: languages["frenshOptions"]['Naissance'],
+          // Mariage: languages["frenshOptions"]['Mariage'],
+          // Deces: languages["frenshOptions"]['Décès'],
+          // Circonsion: languages["frenshOptions"]['Circoncision'],
+          // Parents: languages["frenshOptions"]['Parents'],
+          // Conjoint: languages["frenshOptions"]['Conjoint'],
+          // Enfants: languages["frenshOptions"]['Enfants'],
+          // GrandParent: languages["frenshOptions"]['Grands-parents'],
+          // Freres: languages["frenshOptions"]['Frères'],
+          // Soeurs: languages["frenshOptions"]['Sœurs'],
+          // PetitEnfants: languages["frenshOptions"]['Petits-enfants'],
+          // MariageEnfant: languages["frenshOptions"]['Mariage d’un enfant'],
 
-          TitreDuPage: languages["frenshOptions"]['Congé'],
-          EmployeeName: languages["frenshOptions"]['Congé'],
-          EmailOrganisation: languages["frenshOptions"]['Congé'],
-          EmployeeID: languages["frenshOptions"]['Congé'],
-          Email: languages["frenshOptions"]['Congé'],
-          Champs: languages["frenshOptions"]['Congé'],
-          Reason1: languages["frenshOptions"]['Congé'],
-          Reason2: languages["frenshOptions"]['Congé'],
-          StartDate: languages["frenshOptions"]['Congé'],
-          EndDate: languages["frenshOptions"]['Congé'],
-          Attach: languages["frenshOptions"]['Congé'],
-          Jours: languages["frenshOptions"]['Congé'],
-          RemplacePar: languages["frenshOptions"]['Congé'],
-          CommentFile: languages["frenshOptions"]['Congé'],
-          OtherDetails: languages["frenshOptions"]['Congé'],
-          Solde: languages["frenshOptions"]['Congé'],
-          Enregistrer: languages["frenshOptions"]['Congé']
+          TitreDuPage: languages["frenshOptions"]['TitreDuPage'],
+          EmployeeName: languages["frenshOptions"]['EmployeeName'],
+          EmailOrganisation: languages["frenshOptions"]['EmailOrganisation'],
+          EmployeeID: languages["frenshOptions"]['EmployeeID'],
+          Email: languages["frenshOptions"]['Email'],
+          Champs: languages["frenshOptions"]['Champs'],
+          Reason1: languages["frenshOptions"]['Reason1'],
+          Reason2: languages["frenshOptions"]['Reason2'],
+          StartDate: languages["frenshOptions"]['StartDate'],
+          EndDate: languages["frenshOptions"]['EndDate'],
+          Attach: languages["frenshOptions"]['Attach'],
+          Jours: languages["frenshOptions"]['Jours'],
+          RemplacePar: languages["frenshOptions"]['RemplacePar'],
+          CommentFile: languages["frenshOptions"]['Comment'],
+          OtherDetails: languages["frenshOptions"]['Other details'],
+          Solde: languages["frenshOptions"]['Solde'],
+          Enregistrer: languages["frenshOptions"]['Enregistrer']
         })
       break;
 
@@ -735,7 +735,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
           <div className={stylescustom.DC}>
             <p className={stylescustom.datenow}>Date : <span className="date-time">{CurrentDate}</span></p>
             {/* <div className={stylescustom.titleh1}>Demande de congé </div> */}
-            <div className={stylescustom.titleh1}>Leave request {this.props.LanguageSelected}</div>
+            <div className={stylescustom.titleh1}>{this.state.TitreDuPage} {this.props.LanguageSelected}</div>
             <div className={stylescustom.line}></div>
 
 
