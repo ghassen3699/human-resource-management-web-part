@@ -33,7 +33,8 @@
         "Comment": "Commentaire",
         "Other details": "Autres détails",
         "Solde": "Solde de congé",
-        "Enregistrer": "soumettre la demande"
+        "Enregistrer": "soumettre la demande",
+        "Date":"Date"
     },
 
     "englishOptions" : {
@@ -69,45 +70,46 @@
         "Comment": "Comment",
         "Other details": "Other details",
         "Solde": "Holiday balance",
-        "Enregistrer": "submit request"
+        "Enregistrer": "submit request",
+        "Date":"Date"
     },
 
     
     "arabeOptions" : {
-        "Congé payé": "Congé payé",
-        "Demi journée": "Demi journée",
-        "Maladie":"Maladie",
-        "Naissance":"Naissance",
-        "Mariage": "Mariage", 
-        "Décès": "Décès", 
-        "Circoncision": "Circoncision", 
-        "Parents": "Parents", 
-        "Conjoint": "Conjoint", 
-        "Enfants": "Enfants", 
-        "Grands-parents": "Grands-parents",
-        "Frères": "Frères", 
-        "Sœurs": "Sœurs", 
-        "Petits-enfants": "Petits-enfants",
-        "Mariage d’un enfant":"Mariage d’un enfant",
+        "Congé payé": "عطلة مدفوعة الأجر",
+        "Demi journée": "نصف يوم",
+        "Maladie": "مرض",
+        "Naissance": "ولادة",
+        "Mariage": "حفل زواج", 
+        "Décès": "موت", 
+        "Circoncision": "ختان", 
+        "Parents": "آباء", 
+        "Conjoint": "زوج", 
+        "Enfants": "أطفال", 
+        "Grands-parents": "الأجداد",
+        "Frères": "الإخوة", 
+        "Sœurs": "الأخوات", 
+        "Petits-enfants": "أطفال صغار",
+        "Mariage d’un enfant":"زواج الأطفال",
 
-        "TitreDuPage": "Demande de congé",
-        "EmployeeName": "Nom de l'employé",
-        "EmailOrganisation": "Adresse e-mail de l'organisation",
-        "EmployeeID": "ID d'employé",
-        "Email": "Adresse e-mail",
-        "Champs": "champs requis",
-        "Reason1": "Raison de l'absence",
-        "Reason2": "options",
-        "StartDate": "Date de début",
-        "EndDate": "Date de fin",
-        "Attach": "pièce justificative",
-        "Jours": "Jours",
-        "RemplacePar": "Remplacé par",
-        "Comment": "Commentaire",
-        "Other details": "Autres détails",
-        "Solde": "Solde de congé",
-        "Enregistrer": "soumettre la demande"
+        "TitreDuPage": "طلب إجازة",
+        "EmployeeName": "اسم الموظف",
+        "EmailOrganisation": "عنوان البريد الإلكتروني للمؤسسة",
+        "EmployeeID": "معرف الموظف",
+        "Email": "البريد الإلكتروني",
+        "Champs": "الحقول المطلوبة",
+        "Reason1": "سبب الغياب",
+        "Reason2": "الخيارات",
+        "StartDate": "تاريخ البدء",
+        "EndDate": "تاريخ النهاية",
+        "Attach": "وثيقة مساعدة",
+        "Jours": "عدد الأيام",
+        "RemplacePar": "محله",
+        "Comment": "ملاحظة",
+        "Other details": "تفاصيل أخرى",
+        "Solde": "رصيد الاجازات",
+        "Enregistrer": "تقديم الطلب",
+        "Date":"التاريخ"
     }
     
 }
-

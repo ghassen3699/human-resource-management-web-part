@@ -131,7 +131,9 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     CommentFile: "",
     OtherDetails: "",
     Solde: "",
-    Enregistrer: ""
+    Enregistrer: "",
+    DateFile: "",
+    directionFile: ""
     ///////////////////////////////////////////////////////////////////////////////////
 
 
@@ -599,46 +601,50 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
           CommentFile: languages["frenshOptions"]['Comment'],
           OtherDetails: languages["frenshOptions"]['Other details'],
           Solde: languages["frenshOptions"]['Solde'],
-          Enregistrer: languages["frenshOptions"]['Enregistrer']
+          Enregistrer: languages["frenshOptions"]['Enregistrer'],
+          DateFile: languages["frenshOptions"]['Date'],
+          directionFile: "ltr"
         })
       break;
 
       // Arabic Language
       case 2:
         this.setState({
-          Congepaye: languages["frenshOptions"]['Congé payé'],
-          DemiJournee: languages["frenshOptions"]['Demi journée'],
-          Maladie: languages["frenshOptions"]['Maladie'],
-          Naissance: languages["frenshOptions"]['Naissance'],
-          Mariage: languages["frenshOptions"]['Mariage'],
-          Deces: languages["frenshOptions"]['Décès'],
-          Circonsion: languages["frenshOptions"]['Circoncision'],
-          Parents: languages["frenshOptions"]['Parents'],
-          Conjoint: languages["frenshOptions"]['Conjoint'],
-          Enfants: languages["frenshOptions"]['Enfants'],
-          GrandParent: languages["frenshOptions"]['Grands-parents'],
-          Freres: languages["frenshOptions"]['Frères'],
-          Soeurs: languages["frenshOptions"]['Sœurs'],
-          PetitEnfants: languages["frenshOptions"]['Petits-enfants'],
-          MariageEnfant: languages["frenshOptions"]['Mariage d’un enfant'],
+          Congepaye: languages["arabeOptions"]['Congé payé'],
+          DemiJournee: languages["arabeOptions"]['Demi journée'],
+          Maladie: languages["arabeOptions"]['Maladie'],
+          Naissance: languages["arabeOptions"]['Naissance'],
+          Mariage: languages["arabeOptions"]['Mariage'],
+          Deces: languages["arabeOptions"]['Décès'],
+          Circonsion: languages["arabeOptions"]['Circoncision'],
+          Parents: languages["arabeOptions"]['Parents'],
+          Conjoint: languages["arabeOptions"]['Conjoint'],
+          Enfants: languages["arabeOptions"]['Enfants'],
+          GrandParent: languages["arabeOptions"]['Grands-parents'],
+          Freres: languages["arabeOptions"]['Frères'],
+          Soeurs: languages["arabeOptions"]['Sœurs'],
+          PetitEnfants: languages["arabeOptions"]['Petits-enfants'],
+          MariageEnfant: languages["arabeOptions"]['Mariage d’un enfant'],
 
-          TitreDuPage: languages["frenshOptions"]['TitreDuPage'],
-          EmployeeName: languages["frenshOptions"]['EmployeeName'],
-          EmailOrganisation: languages["frenshOptions"]['EmailOrganisation'],
-          EmployeeID: languages["frenshOptions"]['EmployeeID'],
-          Email: languages["frenshOptions"]['Email'],
-          Champs: languages["frenshOptions"]['Champs'],
-          Reason1: languages["frenshOptions"]['Reason1'],
-          Reason2: languages["frenshOptions"]['Reason2'],
-          StartDate: languages["frenshOptions"]['StartDate'],
-          EndDate: languages["frenshOptions"]['EndDate'],
-          Attach: languages["frenshOptions"]['Attach'],
-          Jours: languages["frenshOptions"]['Jours'],
-          RemplacePar: languages["frenshOptions"]['RemplacePar'],
-          CommentFile: languages["frenshOptions"]['Comment'],
-          OtherDetails: languages["frenshOptions"]['Other details'],
-          Solde: languages["frenshOptions"]['Solde'],
-          Enregistrer: languages["frenshOptions"]['Enregistrer']
+          TitreDuPage: languages["arabeOptions"]['TitreDuPage'],
+          EmployeeName: languages["arabeOptions"]['EmployeeName'],
+          EmailOrganisation: languages["arabeOptions"]['EmailOrganisation'],
+          EmployeeID: languages["arabeOptions"]['EmployeeID'],
+          Email: languages["arabeOptions"]['Email'],
+          Champs: languages["arabeOptions"]['Champs'],
+          Reason1: languages["arabeOptions"]['Reason1'],
+          Reason2: languages["arabeOptions"]['Reason2'],
+          StartDate: languages["arabeOptions"]['StartDate'],
+          EndDate: languages["arabeOptions"]['EndDate'],
+          Attach: languages["arabeOptions"]['Attach'],
+          Jours: languages["arabeOptions"]['Jours'],
+          RemplacePar: languages["arabeOptions"]['RemplacePar'],
+          CommentFile: languages["arabeOptions"]['Comment'],
+          OtherDetails: languages["arabeOptions"]['Other details'],
+          Solde: languages["arabeOptions"]['Solde'],
+          Enregistrer: languages["arabeOptions"]['Enregistrer'],
+          DateFile: languages["arabeOptions"]['Date'],
+          directionFile: "rtl"
         })
       break;
       
@@ -677,10 +683,14 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
           CommentFile: languages["englishOptions"]['Comment'],
           OtherDetails: languages["englishOptions"]['Other details'],
           Solde: languages["englishOptions"]['Solde'],
-          Enregistrer: languages["englishOptions"]['Enregistrer']
+          Enregistrer: languages["englishOptions"]['Enregistrer'],
+          DateFile: languages["englishOptions"]['Date'],
+          directionFile: "ltr"
+
         })
 
       break;
+      
     };
 
   }
@@ -775,9 +785,9 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
         className="App"
         style={{ background: theme.semanticColors.bodyBackground, color: theme.semanticColors.bodyText }}
       >
-        <div className={stylescustom.vacationRequest}>
+        <div className={stylescustom.vacationRequest} dir={this.state.directionFile}>
           <div className={stylescustom.DC}>
-            <p className={stylescustom.datenow}>Date : <span className="date-time">{CurrentDate}</span></p>
+            <p className={stylescustom.datenow}>{this.state.DateFile} : <span className="date-time">{CurrentDate}</span></p>
             {/* <div className={stylescustom.titleh1}>Demande de congé </div> */}
             <div className={stylescustom.titleh1}>{this.state.TitreDuPage}</div>
             <div className={stylescustom.line}></div>
