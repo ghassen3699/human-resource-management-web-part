@@ -35,14 +35,78 @@
         "Solde": "Solde de congé",
         "Enregistrer": "soumettre la demande"
     },
-    
+
     "englishOptions" : {
-        "Congé payé":"Congé payé"
+        "Congé payé": "paid vacation",
+        "Demi journée": "half day",
+        "Maladie":"illness",
+        "Naissance":"birth",
+        "Mariage": "wedding", 
+        "Décès": "death", 
+        "Circoncision": "circumcision", 
+        "Parents": "Parents", 
+        "Conjoint": "Spouse", 
+        "Enfants": "Childrens", 
+        "Grands-parents": "Grand-parents",
+        "Frères": "Brothers", 
+        "Sœurs": "Sisters", 
+        "Petits-enfants": "small-child",
+        "Mariage d’un enfant":"Child Marriage",
+
+        "TitreDuPage": "Leave request",
+        "EmployeeName": "Employee Name",
+        "EmailOrganisation": "Email Organization",
+        "EmployeeID": "Employee ID",
+        "Email": "Email",
+        "Champs": "required fields",
+        "Reason1": "Raison for absente",
+        "Reason2": "options",
+        "StartDate": "Start Date",
+        "EndDate": "End Date",
+        "Attach": "Supporting document",
+        "Jours": "Days",
+        "RemplacePar": "Replace by",
+        "Comment": "Comment",
+        "Other details": "Other details",
+        "Solde": "Holiday balance",
+        "Enregistrer": "submit request"
     },
 
     
     "arabeOptions" : {
-        "Congé payé":"Congé payé"
+        "Congé payé": "Congé payé",
+        "Demi journée": "Demi journée",
+        "Maladie":"Maladie",
+        "Naissance":"Naissance",
+        "Mariage": "Mariage", 
+        "Décès": "Décès", 
+        "Circoncision": "Circoncision", 
+        "Parents": "Parents", 
+        "Conjoint": "Conjoint", 
+        "Enfants": "Enfants", 
+        "Grands-parents": "Grands-parents",
+        "Frères": "Frères", 
+        "Sœurs": "Sœurs", 
+        "Petits-enfants": "Petits-enfants",
+        "Mariage d’un enfant":"Mariage d’un enfant",
+
+        "TitreDuPage": "Demande de congé",
+        "EmployeeName": "Nom de l'employé",
+        "EmailOrganisation": "Adresse e-mail de l'organisation",
+        "EmployeeID": "ID d'employé",
+        "Email": "Adresse e-mail",
+        "Champs": "champs requis",
+        "Reason1": "Raison de l'absence",
+        "Reason2": "options",
+        "StartDate": "Date de début",
+        "EndDate": "Date de fin",
+        "Attach": "pièce justificative",
+        "Jours": "Jours",
+        "RemplacePar": "Remplacé par",
+        "Comment": "Commentaire",
+        "Other details": "Autres détails",
+        "Solde": "Solde de congé",
+        "Enregistrer": "soumettre la demande"
     }
     
 }

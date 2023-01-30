@@ -96,6 +96,8 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     LanguageSelected: 0,
     ///////////////////////////////////////////////////////////////////////////////////
 
+
+
     ///////////////////////////// file Language Data   ////////////////////////////////
     Congepaye: "",
     DemiJournee: "",
@@ -169,13 +171,23 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
   
 
 
+  // // Condition for disable endDate if user select "half day","birth","Mariage","Décès" or "Circoncision"
+  // private disableEndDate = () => {
+  //   if ((this.state.motifAbsence === "half day") || (this.state.motifAbsence === 'birth') || (this.state.motifAbsence === 'wedding') || ((this.state.motifAbsence === 'death')) || ((this.state.motifAbsence === 'Circumcision'))) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
   // Condition for disable endDate if user select "half day","birth","Mariage","Décès" or "Circoncision"
   private disableEndDate = () => {
-    if ((this.state.motifAbsence === "half day") || (this.state.motifAbsence === 'birth') || (this.state.motifAbsence === 'wedding') || ((this.state.motifAbsence === 'death')) || ((this.state.motifAbsence === 'Circumcision'))) {
+    if ((this.state.motifAbsence === this.state.DemiJournee) || (this.state.motifAbsence === this.state.Naissance) || (this.state.motifAbsence === this.state.Mariage) || ((this.state.motifAbsence === this.state.Deces)) || ((this.state.motifAbsence === this.state.Circonsion))) {
       return true;
     }
     return false;
   }
+
+  
 
 
 
@@ -184,9 +196,9 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     var test = true
     switch (this.state.motifAbsence) {
       // 1
-      case "half day":
-      case "birth":
-      case "Circumcision":
+      case this.state.DemiJournee:
+      case this.state.Naissance:
+      case this.state.Circonsion:
         // test DA, remplacer par
         if ((this.state.DateDebut !== null)&&(this.state.replacedBy.length > 0)){
           test = false
@@ -194,18 +206,18 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
       break;
 
       // 2
-      case "wedding":
-      case "death":
+      case this.state.Mariage:
+      case this.state.Deces:
         // test Décès options
         // test DA, REMP, Plus details
-        if (this.state.motifAbsence === "death"){
+        if (this.state.motifAbsence === this.state.Deces){
           if ((this.state.DateDebut !== null) && (this.state.replacedBy.length > 0) && (this.state.decesOptionData !== "")){
             test = false
           }
         }
         // test Mariage options
         // test DA, REMP, Plus details
-        if (this.state.motifAbsence === "wedding"){
+        if (this.state.motifAbsence === this.state.Mariage){
           if ((this.state.DateDebut !== null) && (this.state.replacedBy.length > 0) && (this.state.mariageOtionData !== "")){
             test = false
           }
@@ -214,7 +226,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
       break;
       
       // 3
-      case "illness":
+      case this.state.Maladie:
         // test DA, DF, REMP, File
         if ((this.state.DateDebut !== null) && (this.state.DateFin !== null) && (this.state.replacedBy.length > 0) && (this.state.fileName !== "") && (this.state.numberOfVacationDays > 0)){
           test = false
@@ -222,7 +234,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
       break;
       
       // 4
-      case "paid vacation":
+      case this.state.Congepaye:
         // tester DA, DF, REMP 
         if ((this.state.DateDebut !== null) && (this.state.DateFin !== null) && (this.state.replacedBy.length > 0) && (this.state.numberOfVacationDays > 0)){
           test = false
@@ -240,22 +252,22 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     if (this.state.disabledDays){
       var defaultNumberOfVacationDay, endDate
       switch (this.state.motifAbsence) {
-        case 'half day':
+        case this.state.DemiJournee:
           defaultNumberOfVacationDay = 0.5;
           endDate = beginDate
           break;
 
-        case 'birth':
+        case this.state.Naissance:
           defaultNumberOfVacationDay = 2;
           endDate = addDays(beginDate,defaultNumberOfVacationDay)
         break;
 
-        case 'Circumcision':
+        case this.state.Circonsion:
           defaultNumberOfVacationDay = 1;
           endDate = addDays(beginDate,defaultNumberOfVacationDay)
         break;
 
-        case 'wedding':
+        case this.state.Mariage:
           if (this.state.mariageOtionData !== ""){
             defaultNumberOfVacationDay = this.state.numberOfVacationDays;
             endDate = addDays(beginDate,defaultNumberOfVacationDay)
@@ -263,7 +275,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
           
         break;
 
-        case 'death':
+        case this.state.Deces:
           if (this.state.decesOptionData !== ""){
             defaultNumberOfVacationDay = this.state.numberOfVacationDays;
             endDate = addDays(beginDate,defaultNumberOfVacationDay)
@@ -285,7 +297,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
       // convert the type of date seleted
       const date = Year.toString() + "-" + Month.toString() + "-" + Day.toString()  + " GMT";
       const newDateFormat = new Date(date);
-      if (this.state.motifAbsence === "paid vacation" || this.state.motifAbsence === "illness") {
+      if (this.state.motifAbsence === this.state.Congepaye || this.state.motifAbsence === this.state.Maladie) {
         this.setState({DateDebut:newDateFormat, DateFin:null, numberOfVacationDays:0});
       }else {
         this.setState({DateDebut:newDateFormat});
@@ -299,7 +311,6 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
       const date = Year.toString() + "-" + Month.toString() + "-" + Day.toString()  + " GMT";
       
       const newDateFormat = new Date(date);
-      // const diffDays = this.SumVacationDays(this.state.DateDebut, newDateFormat)
       const numberOfDays = this.getNumberOfDays(this.state.DateDebut, newDateFormat)
 
       this.setState({DateFin:newDateFormat, numberOfVacationDays:numberOfDays});
@@ -375,15 +386,15 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     var disabledDays = false
     if (this.state.motifAbsence !== ""){
       switch (this.state.motifAbsence) {
-        case 'half day':
+        case this.state.DemiJournee:
           defaultNumberOfVacationDay = 0.5;
           disabledDays = true
           break;
-        case 'birth':
+        case this.state.Naissance:
           defaultNumberOfVacationDay = 2;
           disabledDays = true
         break;
-        case 'Circumcision':
+        case this.state.Circonsion:
           defaultNumberOfVacationDay = 1;
           disabledDays = true
         break;
@@ -398,10 +409,10 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     var defaultNumberOfVacationDay = 0
     if (this.state.mariageOtionData !== ""){
       switch (this.state.mariageOtionData) {
-        case 'wedding':
+        case this.state.Mariage:
           defaultNumberOfVacationDay = 3;
           break;
-        case 'child marriage':
+        case this.state.MariageEnfant:
           defaultNumberOfVacationDay = 1;
         break;
       }
@@ -420,26 +431,26 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     var defaultNumberOfVacationDay = 0
     if (this.state.decesOptionData !== ""){
       switch (this.state.decesOptionData) {
-        case 'Parents':
+        case this.state.Parents:
           defaultNumberOfVacationDay = 3;
           break;
-        case 'Spouse':
+        case this.state.Conjoint:
           defaultNumberOfVacationDay = 3;
         break;
-        case 'Childrens':
+        case this.state.Enfants:
           defaultNumberOfVacationDay = 3;
         break;
 
-        case 'Grand-parents':
+        case this.state.GrandParent:
           defaultNumberOfVacationDay = 2;
         break;
-        case 'Brothers':
+        case this.state.Freres:
           defaultNumberOfVacationDay = 2;
         break;
-        case 'sisters':
+        case this.state.Soeurs:
           defaultNumberOfVacationDay = 2;
         break;
-        case 'small-child':
+        case this.state.PetitEnfants:
           defaultNumberOfVacationDay = 2;
         break; 
       }
@@ -459,7 +470,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     if(this.state.decesOptionData !== "") detailAbsence = this.state.decesOptionData
     if(this.state.mariageOtionData !== "") detailAbsence = this.state.mariageOtionData
 
-    if (this.state.motifAbsence === "paid vacation" || this.state.motifAbsence === "half day"  || this.state.motifAbsence === "birth" || this.state.motifAbsence === "Circumcision" ){
+    if (this.state.motifAbsence === this.state.Congepaye || this.state.motifAbsence === this.state.DemiJournee  || this.state.motifAbsence === this.state.Naissance || this.state.motifAbsence === this.state.Circonsion ){
       formData = {
         'Comment': this.state.comment,
         'EndDate': this.state.DateFin,
@@ -497,7 +508,6 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     if (this.state.fileName !== ''){
       const item = Web(this.props.url).lists.getByTitle('vacationRequest').items.getById(sendData.data.ID);
       const result = await item.attachmentFiles.add(this.state.fileName,"add file");
-      // console.log(result)
     }
 
     this.setState({alertShowed:true})
@@ -552,28 +562,26 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
   public initialiseCurrentLanguage = () => {
     var languageSelectedID = this.props.LanguageSelected
-    // console.log(languages["frenshOptions"]['TitreDuPage'])
 
     switch (languageSelectedID) {    
       // Frensh language
       case 1:
-        // update file text
         this.setState({
-          // Congepaye: languages["frenshOptions"]['Congé payé'],
-          // DemiJournee: languages["frenshOptions"]['Demi journée'],
-          // Maladie: languages["frenshOptions"]['Maladie'],
-          // Naissance: languages["frenshOptions"]['Naissance'],
-          // Mariage: languages["frenshOptions"]['Mariage'],
-          // Deces: languages["frenshOptions"]['Décès'],
-          // Circonsion: languages["frenshOptions"]['Circoncision'],
-          // Parents: languages["frenshOptions"]['Parents'],
-          // Conjoint: languages["frenshOptions"]['Conjoint'],
-          // Enfants: languages["frenshOptions"]['Enfants'],
-          // GrandParent: languages["frenshOptions"]['Grands-parents'],
-          // Freres: languages["frenshOptions"]['Frères'],
-          // Soeurs: languages["frenshOptions"]['Sœurs'],
-          // PetitEnfants: languages["frenshOptions"]['Petits-enfants'],
-          // MariageEnfant: languages["frenshOptions"]['Mariage d’un enfant'],
+          Congepaye: languages["frenshOptions"]['Congé payé'],
+          DemiJournee: languages["frenshOptions"]['Demi journée'],
+          Maladie: languages["frenshOptions"]['Maladie'],
+          Naissance: languages["frenshOptions"]['Naissance'],
+          Mariage: languages["frenshOptions"]['Mariage'],
+          Deces: languages["frenshOptions"]['Décès'],
+          Circonsion: languages["frenshOptions"]['Circoncision'],
+          Parents: languages["frenshOptions"]['Parents'],
+          Conjoint: languages["frenshOptions"]['Conjoint'],
+          Enfants: languages["frenshOptions"]['Enfants'],
+          GrandParent: languages["frenshOptions"]['Grands-parents'],
+          Freres: languages["frenshOptions"]['Frères'],
+          Soeurs: languages["frenshOptions"]['Sœurs'],
+          PetitEnfants: languages["frenshOptions"]['Petits-enfants'],
+          MariageEnfant: languages["frenshOptions"]['Mariage d’un enfant'],
 
           TitreDuPage: languages["frenshOptions"]['TitreDuPage'],
           EmployeeName: languages["frenshOptions"]['EmployeeName'],
@@ -597,13 +605,80 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
       // Arabic Language
       case 2:
-        console.log(2)
+        this.setState({
+          Congepaye: languages["frenshOptions"]['Congé payé'],
+          DemiJournee: languages["frenshOptions"]['Demi journée'],
+          Maladie: languages["frenshOptions"]['Maladie'],
+          Naissance: languages["frenshOptions"]['Naissance'],
+          Mariage: languages["frenshOptions"]['Mariage'],
+          Deces: languages["frenshOptions"]['Décès'],
+          Circonsion: languages["frenshOptions"]['Circoncision'],
+          Parents: languages["frenshOptions"]['Parents'],
+          Conjoint: languages["frenshOptions"]['Conjoint'],
+          Enfants: languages["frenshOptions"]['Enfants'],
+          GrandParent: languages["frenshOptions"]['Grands-parents'],
+          Freres: languages["frenshOptions"]['Frères'],
+          Soeurs: languages["frenshOptions"]['Sœurs'],
+          PetitEnfants: languages["frenshOptions"]['Petits-enfants'],
+          MariageEnfant: languages["frenshOptions"]['Mariage d’un enfant'],
 
+          TitreDuPage: languages["frenshOptions"]['TitreDuPage'],
+          EmployeeName: languages["frenshOptions"]['EmployeeName'],
+          EmailOrganisation: languages["frenshOptions"]['EmailOrganisation'],
+          EmployeeID: languages["frenshOptions"]['EmployeeID'],
+          Email: languages["frenshOptions"]['Email'],
+          Champs: languages["frenshOptions"]['Champs'],
+          Reason1: languages["frenshOptions"]['Reason1'],
+          Reason2: languages["frenshOptions"]['Reason2'],
+          StartDate: languages["frenshOptions"]['StartDate'],
+          EndDate: languages["frenshOptions"]['EndDate'],
+          Attach: languages["frenshOptions"]['Attach'],
+          Jours: languages["frenshOptions"]['Jours'],
+          RemplacePar: languages["frenshOptions"]['RemplacePar'],
+          CommentFile: languages["frenshOptions"]['Comment'],
+          OtherDetails: languages["frenshOptions"]['Other details'],
+          Solde: languages["frenshOptions"]['Solde'],
+          Enregistrer: languages["frenshOptions"]['Enregistrer']
+        })
       break;
       
       // English Language
       case 3:
-        console.log(3)
+        this.setState({
+          Congepaye: languages["englishOptions"]['Congé payé'],
+          DemiJournee: languages["englishOptions"]['Demi journée'],
+          Maladie: languages["englishOptions"]['Maladie'],
+          Naissance: languages["englishOptions"]['Naissance'],
+          Mariage: languages["englishOptions"]['Mariage'],
+          Deces: languages["englishOptions"]['Décès'],
+          Circonsion: languages["englishOptions"]['Circoncision'],
+          Parents: languages["englishOptions"]['Parents'],
+          Conjoint: languages["englishOptions"]['Conjoint'],
+          Enfants: languages["englishOptions"]['Enfants'],
+          GrandParent: languages["englishOptions"]['Grands-parents'],
+          Freres: languages["englishOptions"]['Frères'],
+          Soeurs: languages["englishOptions"]['Sœurs'],
+          PetitEnfants: languages["englishOptions"]['Petits-enfants'],
+          MariageEnfant: languages["englishOptions"]['Mariage d’un enfant'],
+
+          TitreDuPage: languages["englishOptions"]['TitreDuPage'],
+          EmployeeName: languages["englishOptions"]['EmployeeName'],
+          EmailOrganisation: languages["englishOptions"]['EmailOrganisation'],
+          EmployeeID: languages["englishOptions"]['EmployeeID'],
+          Email: languages["englishOptions"]['Email'],
+          Champs: languages["englishOptions"]['Champs'],
+          Reason1: languages["englishOptions"]['Reason1'],
+          Reason2: languages["englishOptions"]['Reason2'],
+          StartDate: languages["englishOptions"]['StartDate'],
+          EndDate: languages["englishOptions"]['EndDate'],
+          Attach: languages["englishOptions"]['Attach'],
+          Jours: languages["englishOptions"]['Jours'],
+          RemplacePar: languages["englishOptions"]['RemplacePar'],
+          CommentFile: languages["englishOptions"]['Comment'],
+          OtherDetails: languages["englishOptions"]['Other details'],
+          Solde: languages["englishOptions"]['Solde'],
+          Enregistrer: languages["englishOptions"]['Enregistrer']
+        })
 
       break;
     };
@@ -640,64 +715,33 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     const controlClass = mergeStyleSets({
       TextField: { backgroundColor: "white", }
     });
-
-
-    // // options of Absence
-    // const motifAbsence = [
-    //   {key: "paid vacation",text: "paid vacation"},
-    //   {key: "half day", text: "half day"}, 
-    //   {key: "illness", text: "illness"}, 
-    //   {key: "birth", text: "birth"}, 
-    //   {key: "Mariage", text: "Mariage"}, 
-    //   {key: "Décès", text: "Décès"}, 
-    //   {key: "Circoncision", text: "Circoncision"},
-    // ];
     
     // options of Absence
     const motifAbsence = [
-      {key: "paid vacation",text: "paid vacation"},
-      {key: "half day", text: "half day"}, 
-      {key: "illness", text: "illness"}, 
-      {key: "birth", text: "birth"}, 
-      {key: "wedding", text: "wedding"}, 
-      {key: "death", text: "death"}, 
-      {key: "Circumcision", text: "Circumcision"},
+      {key: this.state.Congepaye,text: this.state.Congepaye},
+      {key: this.state.DemiJournee, text: this.state.DemiJournee}, 
+      {key: this.state.Maladie, text: this.state.Maladie}, 
+      {key: this.state.Naissance, text: this.state.Naissance}, 
+      {key: this.state.Mariage, text: this.state.Mariage}, 
+      {key: this.state.Deces, text: this.state.Deces}, 
+      {key: this.state.Circonsion, text: this.state.Circonsion},
     ];
-
-
-    // // the other options when user choice is "Décès"
-    // const decesOptions = [
-    //   { key: "Parents", text: "Parents", },
-    //   { key: "Conjoint", text: "Conjoint", },
-    //   { key: "Enfants", text: "Enfants", },
-    //   { key: "Grands-parents", text: "Grands-parents", },
-    //   { key: "Frères", text: "Frères", },
-    //   { key: "Sœurs", text: "Sœurs", },
-    //   { key: "Petits-enfants", text: "Petits-enfants", }
-    // ];
 
     // the other options when user choice is "Décès"
     const decesOptions = [
-      { key: "Parents", text: "Parents", },
-      { key: "Spouse", text: "Spouse", },
-      { key: "Childrens", text: "Childrens", },
-      { key: "Grand-parents", text: "Grand-parents", },
-      { key: "Brothers", text: "Brothers", },
-      { key: "sisters", text: "sisters", },
-      { key: "small-child", text: "small-child", }
+      { key: this.state.Parents, text: this.state.Parents, },
+      { key: this.state.Conjoint, text: this.state.Conjoint, },
+      { key: this.state.Enfants, text: this.state.Enfants, },
+      { key: this.state.GrandParent, text: this.state.GrandParent, },
+      { key: this.state.Freres, text: this.state.Freres, },
+      { key: this.state.Soeurs, text: this.state.Soeurs, },
+      { key: this.state.PetitEnfants, text: this.state.PetitEnfants, }
     ];
-
-
-    // // the other options when user choice is "Mariage"
-    // const mariageOptions =  [
-    //   { key: "Mariage", text: "Mariage", },
-    //   { key: "Mariage d’un enfant", text: "Mariage d’un enfant", }
-    // ];
 
     // the other options when user choice is "Mariage"
     const mariageOptions =  [
-      { key: "wedding", text: "wedding", },
-      { key: "child marriage", text: "child marriage", }
+      { key: this.state.Mariage, text: this.state.Mariage, },
+      { key: this.state.MariageEnfant, text: this.state.MariageEnfant, }
     ];
 
 
@@ -735,7 +779,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
           <div className={stylescustom.DC}>
             <p className={stylescustom.datenow}>Date : <span className="date-time">{CurrentDate}</span></p>
             {/* <div className={stylescustom.titleh1}>Demande de congé </div> */}
-            <div className={stylescustom.titleh1}>{this.state.TitreDuPage} {this.props.LanguageSelected}</div>
+            <div className={stylescustom.titleh1}>{this.state.TitreDuPage}</div>
             <div className={stylescustom.line}></div>
 
 
@@ -745,22 +789,22 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
                   <tbody>
                     <tr>
                       {/* <td className={stylescustom.key}>Nom de l'employé</td> */}
-                      <td className={stylescustom.key}>employee name</td>
+                      <td className={stylescustom.key}>{this.state.EmployeeName}</td>
                       <td className={stylescustom.value}>{this.state.currentUserDisplayName} </td>
                     </tr>
                     <tr>
                       {/* <td className={stylescustom.key}>Adresse email de l'organisation</td> */}
-                      <td className={stylescustom.key}>Organization email address</td>
+                      <td className={stylescustom.key}>{this.state.EmailOrganisation}</td>
                       <td className={stylescustom.value}>{this.state.currentUserPrincipalName}</td>
                     </tr>
                     <tr>
                       {/* <td className={stylescustom.key}>ID employé</td> */}
-                      <td className={stylescustom.key}>Employee ID</td>
+                      <td className={stylescustom.key}>{this.state.EmployeeID}</td>
                       <td className={stylescustom.value}>{this.state.currentUserID}</td>
                     </tr>
                     <tr>
                       {/* <td className={stylescustom.key}>Adresse email</td> */}
-                      <td className={stylescustom.key}>E-mail address</td>
+                      <td className={stylescustom.key}>{this.state.Email}</td>
                       <td className={stylescustom.value}>{this.state.currentUserMail}</td>
                     </tr>
                   </tbody>
@@ -770,13 +814,13 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
 
             {/* <p className={stylescustom.indique}>* Indique un champ obligatoire</p> */}
-            <p className={stylescustom.indique}>* Required field</p>
+            <p className={stylescustom.indique}>* {this.state.Champs}</p>
             <div className={stylescustom.row}>
 
               {/* Select absence Motif */}
               <div className={stylescustom.data}>
                 {/* <p className={stylescustom.title}>* Motif d'absence :</p> */}
-                <p className={stylescustom.title}>* Reason for absence :</p>
+                <p className={stylescustom.title}>* {this.state.Reason1} :</p>
                 <Dropdown
                   styles={dropdownStyles}
                   // onRenderTitle={this.onRenderTitle}
@@ -791,9 +835,9 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
 
               {/* ********* Show other décès options when user select décès in motif d'absence ********* */}
-              {this.state.motifAbsence == 'death' && <div className={stylescustom.data}>
+              {this.state.motifAbsence == this.state.Deces && <div className={stylescustom.data}>
                 {/* <p className={stylescustom.title}>* Plus de détails</p> */}
-                <p className={stylescustom.title}>* More details</p>
+                <p className={stylescustom.title}>* {this.state.Reason2}</p>
                 <Dropdown
                   styles={dropdownStyles}
                   // onChange={this.onSelectionChanged}
@@ -812,9 +856,9 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
 
               {/* ********* Show other mariage options when user select mariage in motif d'absence ********* */}
-              {this.state.motifAbsence == 'wedding' && <div className={stylescustom.data}>
+              {this.state.motifAbsence == this.state.Mariage && <div className={stylescustom.data}>
                 {/* <p className={stylescustom.title}>* Plus de détails</p> */}
-                <p className={stylescustom.title}>* More details</p>
+                <p className={stylescustom.title}>* {this.state.Reason2}</p>
                 <Dropdown
                   styles={dropdownStyles}
                   // onChange={this.onSelectionChanged}
@@ -832,7 +876,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
               <div className={stylescustom.data}>
                 {/* <p className={stylescustom.title}>* Date debut :</p> */}
-                <p className={stylescustom.title}>* Start date :</p>
+                <p className={stylescustom.title}>* {this.state.StartDate} :</p>
                 <DatePicker
                   className={controlClass.TextField}
                   allowTextInput={false}
@@ -849,7 +893,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
               <div className={stylescustom.data}>
                 {/* <p className={stylescustom.title}>* Date Fin :</p> */}
-                <p className={stylescustom.title}>* End date :</p>
+                <p className={stylescustom.title}>* {this.state.EndDate}:</p>
                 <DatePicker
                   className={controlClass.TextField}
                   allowTextInput={false}
@@ -866,7 +910,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
               <div className={stylescustom.data}>
                 <p className={stylescustom.title}>
-                  {this.state.motifAbsence === "illness" && <span>*</span>}Attach a supporting document :
+                  {this.state.motifAbsence === this.state.Maladie && <span>*</span>}{this.state.Attach} :
                 </p>
                 {/* <label htmlFor="uploadFile" className={stylescustom.btn}>Choisir un élément</label> */}
                 <label htmlFor="uploadFile" className={stylescustom.btn}>Choose an item</label>
@@ -887,7 +931,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
             <div className={stylescustom.row}>
               <div className={stylescustom.data}>
                 {/* <p className={stylescustom.title}>Jours :</p> */}
-                <p className={stylescustom.title}>Days :</p>
+                <p className={stylescustom.title}>{this.state.Jours} :</p>
 
                 {/* If user Select a vacation d with default days */}
                 {this.state.disabledDays && <TextField className={controlClass.TextField} disabled={this.state.disabledDays} value={this.state.numberOfVacationDays.toString()} />}
@@ -914,7 +958,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
             <div className={stylescustom.row}>
               <div className={stylescustom.datarem}>
                 {/* <p className={stylescustom.title}>Remplacé par :</p> */}
-                <p className={stylescustom.title}>Replaced by :</p>
+                <p className={stylescustom.title}>{this.state.RemplacePar} :</p>
                 <PeoplePicker
                   context={this.props.context}
                   personSelectionLimit={1}
@@ -936,7 +980,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
             <div className={stylescustom.row}>
               <div className={stylescustom.comment}>
                 {/* <p className={stylescustom.title}>Commentaire :</p> */}
-                <p className={stylescustom.title}>Comment :</p>
+                <p className={stylescustom.title}>{this.state.CommentFile} :</p>
                 <TextField className={controlClass.TextField} value={this.state.comment} multiline onChange={this.handleChange} />
               </div>
             </div>
@@ -945,12 +989,12 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
             <table className={stylescustom.ad}>
               <thead>
                 {/* <th className={stylescustom.title} >Autres détails</th> */}
-                <th className={stylescustom.title} >Other details</th>
+                <th className={stylescustom.title} >{this.state.OtherDetails}</th>
               </thead>
               <tbody className={stylescustom.tbody}>
                 <tr>
                   {/* <td className={stylescustom.key}>Solde des congés </td> */}
-                  <td className={stylescustom.key}>Leave balance </td>
+                  <td className={stylescustom.key}>{this.state.Solde} </td>
                   <td className={stylescustom.value}>{this.state.numberOfVacationDaysForUser}</td>
                 </tr>
               </tbody>
@@ -961,7 +1005,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
             <div className={stylescustom.btncont}>
               {/* {this.state.loadingFile ? <Spinner size={SpinnerSize.large} className={stylescustom.spinner} /> : ""} */}
               {/* <button className={stylescustom.btn} onClick={()=>this.collectAllData()} disabled={this.disabledSubmitButton()} >soumettre la demande</button> */}
-              <button className={stylescustom.btn} onClick={()=>this.collectAllData()} disabled={this.disabledSubmitButton()} >submit request</button>
+              <button className={stylescustom.btn} onClick={()=>this.collectAllData()} disabled={this.disabledSubmitButton()} >{this.state.Enregistrer}</button>
             </div>
 
 
