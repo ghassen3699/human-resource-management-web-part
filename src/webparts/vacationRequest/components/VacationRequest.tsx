@@ -78,7 +78,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     comment: "", // comment of form
     replacedBy: [] , // data of user who replaces you on vacation
     numberOfVacationDays: 0,  // number of days in vacation
-    numberOfVacationDaysForUser: 0,
+    // // numberOfVacationDaysForUser: 0,
     ////////////////////////////////////////////////////////////////////////
 
 
@@ -162,6 +162,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
           if (err){
             console.log(err)
           }
+          res.value.map(user => this.addUsersToListe(user))
           let currentUser = res.value.filter(user =>  this.props.context.pageContext.legacyPageContext["userPrincipalName"].toLowerCase() == user.userPrincipalName.toLowerCase())
           userData.push(currentUser[0])
           this.setState({
@@ -173,16 +174,25 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
         })
     })
   }
-  
 
 
-  // // Condition for disable endDate if user select "half day","birth","Mariage","Décès" or "Circoncision"
-  // private disableEndDate = () => {
-  //   if ((this.state.motifAbsence === "half day") || (this.state.motifAbsence === 'birth') || (this.state.motifAbsence === 'wedding') || ((this.state.motifAbsence === 'death')) || ((this.state.motifAbsence === 'Circumcision'))) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  // Add users to users liste with your information(ID, displayName, mail and userDisplayName)
+  private addUsersToListe = async (userInformation) => {
+    const items = await sp.web.lists.getByTitle("usersVacationDays").items();
+    const result = items.filter(user => user.UserID === userInformation.id)
+
+    if (result.length === 0){
+      const iar = await sp.web.lists.getByTitle("usersVacationDays").items.add({
+        UserID: userInformation.id,   // ID of item 
+        DisplayName: userInformation.displayName,    // display name of item
+        UserPrincipalName: userInformation.userPrincipalName,   // user principal name of item 
+        UserMail: userInformation.mail,   // email of item
+        v: userInformation.displayName,
+      });
+    }
+  }
+
+
 
   // Condition for disable endDate if user select "half day","birth","Mariage","Décès" or "Circoncision"
   private disableEndDate = () => {
@@ -191,8 +201,6 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     }
     return false;
   }
-
-  
 
 
 
@@ -322,17 +330,6 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     }
       
   }
-
-
-  // public SumVacationDays = (dateDebut, DateFin) => {
-  //   var diffDays = DateFin.getTime() - dateDebut.getTime();
-  //   diffDays = diffDays / (1000 * 3600 * 24);
-  //   return diffDays
-  // }
-
-
-
-  
 
 
 
@@ -520,15 +517,15 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
 
 
-  // Get numbers of vacation days for current User
-  public numberOfVacationDays = async() => {
-    if (this.state.currentUserID !== ""){
-      const items = await Web(this.props.url).lists.getByTitle('usersVacationDays').items();
-      var currentUserVacationDays = items.filter(item => this.state.currentUserID === item.ID_user);
-      this.setState({numberOfVacationDaysForUser:currentUserVacationDays[0].number_of_vacation})
-    }
+  // // // Get numbers of vacation days for current User
+  // // public numberOfVacationDays = async() => {
+  // //   if (this.state.currentUserID !== ""){
+  // //     const items = await Web(this.props.url).lists.getByTitle('usersVacationDays').items();
+  // //     var currentUserVacationDays = items.filter(item => this.state.currentUserID === item.ID_user);
+  // //     this.setState({numberOfVacationDaysForUser:currentUserVacationDays[0].number_of_vacation})
+  // //   }
 
-  }
+  // // }
 
 
   // Get number of days between two dates exclude weekends
@@ -788,8 +785,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
 
     // get the theme of sharepoint
     const theme = getTheme();
-
-    this.numberOfVacationDays();   // Get number of vacation days for current user
+    // this.numberOfVacationDays();   // Get number of vacation days for current user
     // this.getHolidayDays();     // get holidays days of year in current country
     
 
@@ -1018,7 +1014,9 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
                 <tr>
                   {/* <td className={stylescustom.key}>Solde des congés </td> */}
                   <td className={stylescustom.key}>{this.state.Solde} </td>
-                  <td className={stylescustom.value}>{this.state.numberOfVacationDaysForUser}</td>
+                  {/* <td className={stylescustom.value}>{this.state.numberOfVacationDaysForUser}</td> */}
+                  <td className={stylescustom.value}>22 test</td>
+
                 </tr>
               </tbody>
             </table>
