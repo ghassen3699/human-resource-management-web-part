@@ -34,7 +34,11 @@
         "Other details": "Autres détails",
         "Solde": "Solde de congé",
         "Enregistrer": "soumettre la demande",
-        "Date":"Date"
+        "Date":"Date",
+        "ChoisirFichier":"choisir un élément",
+        "TitreMessageValidation":"Demande de congé",
+        "TextMessageValidation":"Demande soumise"
+
     },
 
     "englishOptions" : {
@@ -71,7 +75,10 @@
         "Other details": "Other details",
         "Solde": "Holiday balance",
         "Enregistrer": "submit request",
-        "Date":"Date"
+        "Date":"Date",
+        "ChoisirFichier":"choose an item",
+        "TitreMessageValidation":"Leave request",
+        "TextMessageValidation":"Request submitted"
     },
 
     
@@ -109,7 +116,10 @@
         "Other details": "تفاصيل أخرى",
         "Solde": "رصيد الاجازات",
         "Enregistrer": "تقديم الطلب",
-        "Date":"التاريخ"
+        "Date":"التاريخ",
+        "ChoisirFichier":"اختر الملف",
+        "TitreMessageValidation":"طلب إجازة",
+        "TextMessageValidation":"طلب مقدم"
     }
     
 }

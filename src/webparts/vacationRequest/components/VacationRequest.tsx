@@ -133,7 +133,10 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     Solde: "",
     Enregistrer: "",
     DateFile: "",
-    directionFile: ""
+    directionFile: "",
+    ChoisirFichier: "",
+    TitreMessageValidation:"",
+    TextMessageValidation: ""
     ///////////////////////////////////////////////////////////////////////////////////
 
 
@@ -603,7 +606,10 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
           Solde: languages["frenshOptions"]['Solde'],
           Enregistrer: languages["frenshOptions"]['Enregistrer'],
           DateFile: languages["frenshOptions"]['Date'],
-          directionFile: "ltr"
+          directionFile: "ltr",
+          ChoisirFichier: languages["frenshOptions"]['ChoisirFichier'],
+          TitreMessageValidation: languages["frenshOptions"]['TitreMessageValidation'],
+          TextMessageValidation: languages["frenshOptions"]['TextMessageValidation'],
         })
       break;
 
@@ -644,7 +650,11 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
           Solde: languages["arabeOptions"]['Solde'],
           Enregistrer: languages["arabeOptions"]['Enregistrer'],
           DateFile: languages["arabeOptions"]['Date'],
-          directionFile: "rtl"
+          directionFile: "rtl",
+          ChoisirFichier: languages["arabeOptions"]['ChoisirFichier'],
+          TitreMessageValidation: languages["arabeOptions"]['TitreMessageValidation'],
+          TextMessageValidation: languages["arabeOptions"]['TextMessageValidation'],
+
         })
       break;
       
@@ -685,7 +695,10 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
           Solde: languages["englishOptions"]['Solde'],
           Enregistrer: languages["englishOptions"]['Enregistrer'],
           DateFile: languages["englishOptions"]['Date'],
-          directionFile: "ltr"
+          directionFile: "ltr",
+          ChoisirFichier: languages["englishOptions"]['ChoisirFichier'],
+          TitreMessageValidation: languages["englishOptions"]['TitreMessageValidation'],
+          TextMessageValidation: languages["englishOptions"]['TextMessageValidation'],
 
         })
 
@@ -923,7 +936,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
                   {this.state.motifAbsence === this.state.Maladie && <span>*</span>}{this.state.Attach} :
                 </p>
                 {/* <label htmlFor="uploadFile" className={stylescustom.btn}>Choisir un élément</label> */}
-                <label htmlFor="uploadFile" className={stylescustom.btn}>Choose an item</label>
+                <label htmlFor="uploadFile" className={stylescustom.btn}>{this.state.ChoisirFichier}</label>
                 <input type="file" id="uploadFile" style={{ display: 'none' }}
                   accept=".jpg, .jpeg, .png , .pdf , .doc ,.docx"
                   onChange={(e) => { this.addFile(e); }} 
@@ -1027,7 +1040,7 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
             imageHeight="200"
             /> */}
             <SweetAlert
-            show={this.state.alertShowed} title="Leave request" text="Request submited"
+            show={this.state.alertShowed} title={this.state.TitreMessageValidation} text={this.state.TextMessageValidation}
             confirmButtonColor='#7D2935'
             onConfirm={() => window.open(this.props.url + "/SitePages/Vacation-List.aspx", "_self")}
             imageWidth="200"
