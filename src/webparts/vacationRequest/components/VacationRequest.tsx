@@ -38,20 +38,6 @@ export interface IUser {
 import languages from "../../../languages/languages.json"
 
 
-//import { IUserPresenceState } from './IVacationRequestProps';
-
-
-// import { IPresence } from "../../../model/IPresence";
-// import GraphService from '../../../services/GraphService';
-// import { getTheme } from "@uifabric/styling";
-// import { JSONParser } from '@pnp/odata';
-
-
-
-
-
-
-
 export default class VacationRequest extends React.Component<IVacationRequestProps, {}> {
 
   // state of vacation request webpart
@@ -227,7 +213,10 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
       case this.state.Naissance:
       case this.state.Circonsion:
         // test DA, remplacer par
-        if ((this.state.DateDebut !== null)&&(this.state.replacedBy.length > 0)){
+        // if ((this.state.DateDebut !== null)&&(this.state.replacedBy.length > 0)){
+        //   test = false
+        // }
+        if ((this.state.DateDebut !== null)){
           test = false
         }
       break;
@@ -238,14 +227,20 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
         // test Décès options
         // test DA, REMP, Plus details
         if (this.state.motifAbsence === this.state.Deces){
-          if ((this.state.DateDebut !== null) && (this.state.replacedBy.length > 0) && (this.state.decesOptionData !== "")){
+          // if ((this.state.DateDebut !== null) && (this.state.replacedBy.length > 0) && (this.state.decesOptionData !== "")){
+          //   test = false
+          // }
+          if ((this.state.DateDebut !== null) && (this.state.decesOptionData !== "")){
             test = false
           }
         }
         // test Mariage options
         // test DA, REMP, Plus details
         if (this.state.motifAbsence === this.state.Mariage){
-          if ((this.state.DateDebut !== null) && (this.state.replacedBy.length > 0) && (this.state.mariageOtionData !== "")){
+          // if ((this.state.DateDebut !== null) && (this.state.replacedBy.length > 0) && (this.state.mariageOtionData !== "")){
+          //   test = false
+          // }
+          if ((this.state.DateDebut !== null) && (this.state.mariageOtionData !== "")){
             test = false
           }
 
@@ -255,7 +250,10 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
       // 3
       case this.state.Maladie:
         // test DA, DF, REMP, File
-        if ((this.state.DateDebut !== null) && (this.state.DateFin !== null) && (this.state.replacedBy.length > 0) && (this.state.fileName !== "") && (this.state.numberOfVacationDays > 0) && (this.calculerVacationDaysForSubmit(this.state.numberOfVacationDays,this.state.vacationDaysOfCurrentUser))){
+        // if ((this.state.DateDebut !== null) && (this.state.DateFin !== null) && (this.state.replacedBy.length > 0) && (this.state.fileName !== "") && (this.state.numberOfVacationDays > 0) && (this.calculerVacationDaysForSubmit(this.state.numberOfVacationDays,this.state.vacationDaysOfCurrentUser))){
+        //   test = false
+        // }
+        if ((this.state.DateDebut !== null) && (this.state.DateFin !== null) && (this.state.fileName !== "") && (this.state.numberOfVacationDays > 0) && (this.calculerVacationDaysForSubmit(this.state.numberOfVacationDays,this.state.vacationDaysOfCurrentUser))){
           test = false
         }
       break;
@@ -263,7 +261,10 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
       // 4
       case this.state.Congepaye:
         // tester DA, DF, REMP 
-        if ((this.state.DateDebut !== null) && (this.state.DateFin !== null) && (this.state.replacedBy.length > 0) && (this.state.numberOfVacationDays > 0) && (this.calculerVacationDaysForSubmit(this.state.numberOfVacationDays,this.state.vacationDaysOfCurrentUser))){
+        // if ((this.state.DateDebut !== null) && (this.state.DateFin !== null) && (this.state.replacedBy.length > 0) && (this.state.numberOfVacationDays > 0) && (this.calculerVacationDaysForSubmit(this.state.numberOfVacationDays,this.state.vacationDaysOfCurrentUser))){
+        //   test = false
+        // }
+        if ((this.state.DateDebut !== null) && (this.state.DateFin !== null) && (this.state.numberOfVacationDays > 0) && (this.calculerVacationDaysForSubmit(this.state.numberOfVacationDays,this.state.vacationDaysOfCurrentUser))){
           test = false
         }
       break; 
@@ -509,38 +510,38 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
     if(this.state.mariageOtionData !== "") detailAbsence = this.state.mariageOtionData
 
     if (this.state.motifAbsence === this.state.Congepaye || this.state.motifAbsence === this.state.DemiJournee  || this.state.motifAbsence === this.state.Naissance || this.state.motifAbsence === this.state.Circonsion ){
+      var replacedByID = 0
+      if (this.state.replacedBy.length !== 0) replacedByID = this.state.replacedBy[0].ID
       formData = {
         'Comment': this.state.comment,
         'EndDate': this.state.DateFin,
         'DetailMotifAbsence': "",
         'NrbDays': this.state.numberOfVacationDays,
         'RemainingDays': "0",
-        'ReplacedById': this.state.replacedBy[0].ID,
-        'ReplacedByStringId': this.state.replacedBy[0].ID.toString(),
+        'ReplacedById': replacedByID,
+        'ReplacedByStringId': replacedByID.toString(),
         'RequestType': "en cours",
         'ctgVacation': this.state.motifAbsence,
         'dateDeDepart': this.state.DateDebut,
         'vacationType': "",
       };
     }else {
+      var replacedByID = 0
+      if (this.state.replacedBy.length !== 0) replacedByID = this.state.replacedBy[0].ID
       formData = {
         'Comment': this.state.comment,
         'EndDate': this.state.DateFin,
         'DetailMotifAbsence': this.state.motifAbsence +" "+detailAbsence,
         'NrbDays': this.state.numberOfVacationDays,
         'RemainingDays': "0",
-        'ReplacedById': this.state.replacedBy[0].ID,
-        'ReplacedByStringId': this.state.replacedBy[0].ID.toString(),
+        'ReplacedById': replacedByID,
+        'ReplacedByStringId': replacedByID.toString(),
         'RequestType': "en cours",
         'ctgVacation': this.state.motifAbsence,
         'dateDeDepart': this.state.DateDebut,
         'vacationType': detailAbsence,
       };
     }
-
-
-    
-
     
     // add new vacation request to sharepoint list 
     const sendData = await Web(this.props.url).lists.getByTitle('vacationRequest').items.add(formData);
@@ -874,38 +875,10 @@ export default class VacationRequest extends React.Component<IVacationRequestPro
             <div className={stylescustom.line}></div>
 
 
-            <div className={stylescustom.row}>
-              <div className={stylescustom.col}>
-                <table className={stylescustom.table}>
-                  <tbody>
-                    <tr>
-                      {/* <td className={stylescustom.key}>Nom de l'employé</td> */}
-                      <td className={stylescustom.key}>{this.state.EmployeeName}</td>
-                      <td className={stylescustom.value}>{this.state.currentUserDisplayName} </td>
-                    </tr>
-                    <tr>
-                      {/* <td className={stylescustom.key}>Adresse email de l'organisation</td> */}
-                      <td className={stylescustom.key}>{this.state.EmailOrganisation}</td>
-                      <td className={stylescustom.value}>{this.state.currentUserPrincipalName}</td>
-                    </tr>
-                    <tr>
-                      {/* <td className={stylescustom.key}>ID employé</td> */}
-                      <td className={stylescustom.key}>{this.state.EmployeeID}</td>
-                      <td className={stylescustom.value}>{this.state.currentUserID}</td>
-                    </tr>
-                    <tr>
-                      {/* <td className={stylescustom.key}>Adresse email</td> */}
-                      <td className={stylescustom.key}>{this.state.Email}</td>
-                      <td className={stylescustom.value}>{this.state.currentUserMail}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
 
 
             {/* <p className={stylescustom.indique}>* Indique un champ obligatoire</p> */}
-            <p className={stylescustom.indique}>* {this.state.Champs}</p>
             <div className={stylescustom.row}>
 
               {/* Select absence Motif */}
