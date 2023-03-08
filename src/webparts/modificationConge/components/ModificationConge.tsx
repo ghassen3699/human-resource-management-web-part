@@ -618,12 +618,6 @@ export default class ModificationConge extends React.Component<IModificationCong
     }
 
   }
-
-
-  // // get the current language of sharepoint ************************
-  // public currentSharepointLanguage = () => {
-  //   console.log(this.props.context.currentCultureName);
-  // }
   
 
 
@@ -712,34 +706,6 @@ export default class ModificationConge extends React.Component<IModificationCong
             <div className={stylescustom.titleh1}>Modification demande de congé </div>
             <div className={stylescustom.line}></div>
 
-
-            <div className={stylescustom.row}>
-              <div className={stylescustom.col}>
-                <table className={stylescustom.table}>
-                  <tbody>
-                    <tr>
-                      <td className={stylescustom.key}>Nom de l'employé</td>
-                      <td className={stylescustom.value}>{this.state.currentUserDisplayName} </td>
-                    </tr>
-                    <tr>
-                      <td className={stylescustom.key}>Adresse email de l'organisation</td>
-                      <td className={stylescustom.value}>{this.state.currentUserPrincipalName}</td>
-                    </tr>
-                    <tr>
-                      <td className={stylescustom.key}>ID employé</td>
-                      <td className={stylescustom.value}>{this.state.currentUserID}</td>
-                    </tr>
-                    <tr>
-                      <td className={stylescustom.key}>Adresse email</td>
-                      <td className={stylescustom.value}>{this.state.currentUserMail}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-
-            <p className={stylescustom.indique}>* Indique un champ obligatoire</p>
             <div className={stylescustom.row}>
 
               {/* Select absence Motif */}
